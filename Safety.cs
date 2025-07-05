@@ -52,66 +52,9 @@ namespace Singularity_OS.Menu
             try
             {
                 if (hasRemovedThisFrame)
-                {
                     return;
-                }
-                hasRemovedThisFrame = true;
-                RaiseEventOptions options = new RaiseEventOptions
-                {
-                    CachingOption = EventCaching.RemoveFromRoomCache,
-                    TargetActors = new int[] { PhotonNetwork.LocalPlayer.ActorNumber }
-                };
-                PhotonNetwork.NetworkingClient.OpRaiseEvent(200, null, options, SendOptions.SendReliable);
-                GorillaNot.instance.rpcErrorMax = int.MaxValue;
-                GorillaNot.instance.rpcCallLimit = int.MaxValue;
-                GorillaNot.instance.logErrorMax = int.MaxValue;
-                PhotonNetwork.MaxResendsBeforeDisconnect = int.MaxValue;
-                PhotonNetwork.QuickResends = int.MaxValue;
-                PhotonNetwork.RemoveRPCs(PhotonNetwork.LocalPlayer);
-                PhotonNetwork.RemoveBufferedRPCs(GorillaTagger.Instance.myVRRig.ViewID, null, null);
-                PhotonNetwork.RemoveRPCsInGroup(int.MaxValue);
-                PhotonView playerPhotonView = GorillaTagger.Instance.myVRRig.GetComponent<PhotonView>();
-                if (playerPhotonView != null)
-                {
-                    if (playerPhotonView.Owner == null)
-                    {
-                        playerPhotonView.TransferOwnership(PhotonNetwork.LocalPlayer);
-                    }
-                    PhotonNetwork.OpCleanRpcBuffer(playerPhotonView);
-                }
+                
                 PhotonNetwork.SendAllOutgoingCommands();
-                GorillaNot.instance.OnPlayerLeftRoom(PhotonNetwork.LocalPlayer);
-                GorillaGameManager.instance.OnPlayerLeftRoom(PhotonNetwork.LocalPlayer);
-                GorillaGameManager.instance.OnPlayerLeftRoom(PhotonNetwork.LocalPlayer);
-                GorillaGameManager.instance.OnPlayerLeftRoom(PhotonNetwork.LocalPlayer);
-                GorillaNot.instance.OnPlayerLeftRoom(PhotonNetwork.LocalPlayer);
-                try
-                {
-                    PhotonNetwork.NetworkingClient.EventReceived -= PhotonNetwork.NetworkingClient.OnEvent;
-                    PhotonNetwork.NetworkingClient.EventReceived += (eventData) =>
-                    {
-                        if (eventData.Sender != PhotonNetwork.LocalPlayer.ActorNumber)
-                        {
-                            return;
-                        }
-                    };
-                    PhotonNetwork.NetworkingClient.LoadBalancingPeer.LimitOfUnreliableCommands = 0;
-                }
-                catch (Exception ex)
-                { }
-                if (GorillaNot.instance != null)
-                {
-                    FieldInfo report = typeof(GorillaNot).GetField("sendReport", BindingFlags.NonPublic);
-                    if (report != null)
-                    {
-                        report.SetValue(GorillaNot.instance, false);
-                    }
-                    report = typeof(GorillaNot).GetField("_sendReport", BindingFlags.NonPublic);
-                    if (report != null)
-                    {
-                        report.SetValue(GorillaNot.instance, false);
-                    }
-                }
             }
             catch (Exception ex)
             { Debug.Log("{ERROR} : " + ex.Message); }
