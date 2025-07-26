@@ -13,19 +13,21 @@ namespace Singularity_OS.Menu
     {
         public static void AntiReport()
         {
-            var scoreboardLine = GorillaScoreboardTotalUpdater.allScoreboardLines.Find((GorillaPlayerScoreboardLine L) => L.playerVRRig.isLocal);
-            foreach (VRRig vrrigs in GorillaParent.instance.vrrigs)
+            foreach (GorillaPlayerScoreboardLine scoreboardLine in GorillaScoreboardTotalUpdater.allScoreboardLines)
             {
-                var Limit = 0.51f;
-                var ReportPosition = scoreboardLine.reportButton.gameObject.transform.position;
-                var RightDis = Vector3.Distance(vrrigs.rightHandTransform.position, ReportPosition);
-                var LeftDis = Vector3.Distance(vrrigs.leftHandTransform.position, ReportPosition);
-                if (RightDis <= Limit || LeftDis <= Limit)
+                foreach (VRRig vrrigs in GorillaParent.instance.vrrigs)
                 {
-                    if (!vrrigs.isLocal && !vrrigs.isMyPlayer)
+                    var Limit = 0.51f;
+                    var ReportPosition = scoreboardLine.reportButton.gameObject.transform.position;
+                    var RightDis = Vector3.Distance(vrrigs.rightHandTransform.position, ReportPosition);
+                    var LeftDis = Vector3.Distance(vrrigs.leftHandTransform.position, ReportPosition);
+                    if (RightDis <= Limit || LeftDis <= Limit)
                     {
-                        PhotonNetwork.Disconnect();
-                        flush();
+                        if (!vrrigs.isLocal && !vrrigs.isMyPlayer)
+                        {
+                            NetworkSystem.Instance.ReturnToSinglePlayer();
+                            flush();
+                        }
                     }
                 }
             }
