@@ -51,14 +51,14 @@ namespace StupidTemplate.Menu
         {
             c++;
 
-            if (c > 6)
+            if (c > 31)
             {
                 c = 0;
             }
 
             if (c < 0)
             {
-                c = 6;
+                c = 31;
             }
 
 
@@ -103,7 +103,7 @@ namespace StupidTemplate.Menu
                 catButton = new Color32(110, 0, 180, 255);
                 panelColor = new Color32(30, 20, 45, 255);
                 Settings.textColors[1] = Color.black;
-                Main.GetIndex("Menu Theme").overlapText = "purple";
+                Main.GetIndex("Menu Theme").overlapText = "Purple";
             }
 
             if (c == 4)
@@ -114,7 +114,7 @@ namespace StupidTemplate.Menu
                 catButton = new Color32(219, 70, 135, 255);
                 panelColor = new Color32(40, 20, 35, 255);
                 Settings.textColors[1] = Color.black;
-                Main.GetIndex("Menu Theme").overlapText = "pink";
+                Main.GetIndex("Menu Theme").overlapText = "Pink";
             }
             if (c == 5)
             {
@@ -124,7 +124,7 @@ namespace StupidTemplate.Menu
                 catButton = new Color32(120, 220, 160, 255);
                 panelColor = new Color32(105, 255, 155, 255);
                 Settings.textColors[1] = Color.black;
-                Main.GetIndex("Menu Theme").overlapText = "mint";
+                Main.GetIndex("Menu Theme").overlapText = "Mint";
             }
             if (c == 6)
             {
@@ -134,7 +134,257 @@ namespace StupidTemplate.Menu
                 catButton = new Color32(150, 20, 20, 50);
                 panelColor = new Color32(145, 15, 15, 50);
                 Settings.textColors[1] = Color.black;
-                Main.GetIndex("Menu Theme").overlapText = "red";
+                Main.GetIndex("Menu Theme").overlapText = "Red";
+            }
+            if (c == 7)
+            {
+                menuColor = new Color32(15, 20, 10, 255);
+                btnColor1 = new Color32(0, 255, 0, 255);
+                btnColor2 = new Color32(50, 100, 50, 255);
+                catButton = new Color32(100, 255, 100, 255);
+                panelColor = new Color32(25, 35, 20, 255);
+                Settings.textColors[1] = Color.white;
+                Main.GetIndex("Menu Theme").overlapText = "Toxic";
+            }
+            if (c == 8)
+            {
+                menuColor = new Color32(255, 220, 245, 255);
+                btnColor1 = new Color32(255, 170, 255, 255);
+                btnColor2 = new Color32(170, 200, 255, 255);
+                catButton = new Color32(200, 180, 255, 255);
+                panelColor = new Color32(245, 200, 230, 255);
+                Settings.textColors[1] = Color.black;
+                Main.GetIndex("Menu Theme").overlapText = "Cotton Candy";
+            }
+            if (c == 9)
+            {
+                menuColor = new Color32(30, 0, 0, 255);
+                btnColor1 = new Color32(255, 87, 34, 255);
+                btnColor2 = new Color32(180, 40, 30, 255);
+                catButton = new Color32(255, 111, 0, 255);
+                panelColor = new Color32(50, 15, 10, 255);
+                Settings.textColors[1] = Color.white;
+                Main.GetIndex("Menu Theme").overlapText = "Inferno";
+            }
+            if (c == 10)
+            {
+                menuColor = new Color32(18, 18, 18, 255);
+                btnColor1 = new Color32(70, 70, 70, 255);
+                btnColor2 = new Color32(45, 45, 45, 255);
+                catButton = new Color32(90, 90, 90, 255);
+                panelColor = new Color32(28, 28, 28, 255);
+                Settings.textColors[1] = Color.white;
+                Main.GetIndex("Menu Theme").overlapText = "Slate";
+            }
+            if (c == 11)
+            {
+                menuColor = new Color32(0, 30, 40, 255);
+                btnColor1 = new Color32(0, 255, 255, 255);
+                btnColor2 = new Color32(0, 200, 200, 255);
+                catButton = new Color32(0, 220, 220, 255);
+                panelColor = new Color32(10, 50, 60, 255);
+                Settings.textColors[1] = Color.white;
+                Main.GetIndex("Menu Theme").overlapText = "Aqua";
+            }
+            if (c == 12)
+            {
+                menuColor = new Color32(200, 235, 255, 255);
+                btnColor1 = new Color32(0, 150, 255, 255);
+                btnColor2 = new Color32(0, 120, 200, 255);
+                catButton = new Color32(0, 170, 255, 255);
+                panelColor = new Color32(180, 225, 255, 255);
+                Settings.textColors[1] = Color.black;
+                Main.GetIndex("Menu Theme").overlapText = "Arctic";
+            }
+            if (c == 13)
+            {
+                menuColor = new Color32(40, 10, 30, 255);
+                btnColor1 = new Color32(255, 140, 105, 255);
+                btnColor2 = new Color32(255, 105, 180, 255);
+                catButton = new Color32(255, 160, 122, 255);
+                panelColor = new Color32(60, 20, 40, 255);
+                Settings.textColors[1] = Color.white;
+                Main.GetIndex("Menu Theme").overlapText = "Sunset";
+            }
+            if (c == 14)
+            {
+                menuColor = new Color32(25, 0, 0, 255);
+                btnColor1 = new Color32(200, 0, 0, 255);
+                btnColor2 = new Color32(120, 0, 0, 255);
+                catButton = new Color32(180, 20, 20, 255);
+                panelColor = new Color32(40, 5, 5, 255);
+                Settings.textColors[1] = Color.white;
+                Main.GetIndex("Menu Theme").overlapText = "Blood";
+            }
+            if (c == 15)
+            {
+                menuColor = new Color32(30, 5, 0, 255);
+                btnColor1 = new Color32(255, 80, 0, 255);
+                btnColor2 = new Color32(180, 30, 0, 255);
+                catButton = new Color32(255, 100, 50, 255);
+                panelColor = new Color32(45, 10, 5, 255);
+                Settings.textColors[1] = Color.white;
+                Main.GetIndex("Menu Theme").overlapText = "Lava";
+            }
+            if (c == 16)
+            {
+                menuColor = new Color32(25, 20, 5, 255);
+                btnColor1 = new Color32(255, 215, 0, 255);
+                btnColor2 = new Color32(180, 140, 0, 255);
+                catButton = new Color32(220, 180, 50, 255);
+                panelColor = new Color32(45, 35, 10, 255);
+                Settings.textColors[1] = Color.black;
+                Main.GetIndex("Menu Theme").overlapText = "Gold";
+            }
+            if (c == 17)
+            {
+                menuColor = new Color32(25, 0, 40, 255);
+                btnColor1 = new Color32(180, 0, 255, 255);
+                btnColor2 = new Color32(100, 0, 180, 255);
+                catButton = new Color32(150, 0, 220, 255);
+                panelColor = new Color32(35, 5, 60, 255);
+                Settings.textColors[1] = Color.white;
+                Main.GetIndex("Menu Theme").overlapText = "Violet";
+            }
+            if (c == 18)
+            {
+                menuColor = new Color32(5, 20, 0, 255);
+                btnColor1 = new Color32(150, 255, 0, 255);
+                btnColor2 = new Color32(100, 180, 0, 255);
+                catButton = new Color32(120, 220, 30, 255);
+                panelColor = new Color32(20, 40, 10, 255);
+                Settings.textColors[1] = Color.black;
+                Main.GetIndex("Menu Theme").overlapText = "Radioactive";
+            }
+            if (c == 19)
+            {
+                menuColor = new Color32(10, 0, 20, 255);
+                btnColor1 = new Color32(120, 255, 220, 255);
+                btnColor2 = new Color32(90, 200, 180, 255);
+                catButton = new Color32(140, 255, 240, 255);
+                panelColor = new Color32(20, 5, 40, 255);
+                Settings.textColors[1] = Color.white;
+                Main.GetIndex("Menu Theme").overlapText = "Aurora";
+            }
+            if (c == 20)
+            {
+                menuColor = new Color32(10, 10, 25, 255);
+                btnColor1 = new Color32(0, 255, 170, 255);
+                btnColor2 = new Color32(0, 170, 120, 255);
+                catButton = new Color32(0, 200, 180, 255);
+                panelColor = new Color32(20, 20, 40, 255);
+                Settings.textColors[1] = Color.white;
+                Main.GetIndex("Menu Theme").overlapText = "Cyber";
+            }
+            if (c == 21)
+            {
+                menuColor = new Color32(45, 10, 0, 255);
+                btnColor1 = new Color32(255, 120, 0, 255);
+                btnColor2 = new Color32(200, 90, 0, 255);
+                catButton = new Color32(255, 160, 40, 255);
+                panelColor = new Color32(60, 20, 5, 255);
+                Settings.textColors[1] = Color.white;
+                Main.GetIndex("Menu Theme").overlapText = "Solar";
+            }
+            if (c == 22)
+            {
+                menuColor = new Color32(245, 225, 255, 255);
+                btnColor1 = new Color32(255, 150, 200, 255);
+                btnColor2 = new Color32(200, 120, 180, 255);
+                catButton = new Color32(255, 180, 230, 255);
+                panelColor = new Color32(255, 240, 255, 255);
+                Settings.textColors[1] = Color.black;
+                Main.GetIndex("Menu Theme").overlapText = "Pastel";
+            }
+            if (c == 23)
+            {
+                menuColor = new Color32(5, 0, 10, 255);
+                btnColor1 = new Color32(120, 0, 255, 255);
+                btnColor2 = new Color32(80, 0, 180, 255);
+                catButton = new Color32(150, 50, 255, 255);
+                panelColor = new Color32(10, 0, 20, 255);
+                Settings.textColors[1] = Color.white;
+                Main.GetIndex("Menu Theme").overlapText = "Void";
+            }
+            if (c == 24)
+            {
+                menuColor = new Color32(10, 25, 35, 255);
+                btnColor1 = new Color32(0, 180, 255, 255);
+                btnColor2 = new Color32(0, 120, 200, 255);
+                catButton = new Color32(0, 210, 255, 255);
+                panelColor = new Color32(20, 40, 60, 255);
+                Settings.textColors[1] = Color.white;
+                Main.GetIndex("Menu Theme").overlapText = "Ocean";
+            }
+            if (c == 25)
+            {
+                menuColor = new Color32(10, 0, 0, 255);
+                btnColor1 = new Color32(255, 60, 60, 255);
+                btnColor2 = new Color32(180, 40, 40, 255);
+                catButton = new Color32(255, 90, 90, 255);
+                panelColor = new Color32(20, 10, 10, 255);
+                Settings.textColors[1] = Color.white;
+                Main.GetIndex("Menu Theme").overlapText = "Midnight";
+            }
+            if (c == 26)
+            {
+                menuColor = new Color32(15, 0, 0, 255);
+                btnColor1 = new Color32(255, 45, 85, 255);
+                btnColor2 = new Color32(200, 30, 60, 255);
+                catButton = new Color32(255, 70, 110, 255);
+                panelColor = new Color32(30, 5, 5, 255);
+                Settings.textColors[1] = Color.white;
+                Main.GetIndex("Menu Theme").overlapText = "Blood V2";
+            }
+            if (c == 27)
+            {
+                menuColor = new Color32(25, 0, 0, 255);
+                btnColor1 = new Color32(180, 20, 20, 255);
+                btnColor2 = new Color32(120, 0, 0, 255);
+                catButton = new Color32(210, 40, 40, 255);
+                panelColor = new Color32(40, 10, 10, 255);
+                Settings.textColors[1] = Color.white;
+                Main.GetIndex("Menu Theme").overlapText = "Crimson";
+            }
+            if (c == 28)
+            {
+                menuColor = new Color32(10, 0, 30, 255);
+                btnColor1 = new Color32(0, 255, 180, 255);
+                btnColor2 = new Color32(0, 200, 130, 255);
+                catButton = new Color32(40, 255, 200, 255);
+                panelColor = new Color32(15, 0, 40, 255);
+                Settings.textColors[1] = Color.white;
+                Main.GetIndex("Menu Theme").overlapText = "Plasma";
+            }
+            if (c == 29)
+            {
+                menuColor = new Color32(2, 2, 2, 255);
+                btnColor1 = new Color32(8, 8, 8, 255);
+                btnColor2 = new Color32(4, 4, 4, 255);
+                catButton = new Color32(12, 12, 12, 255);
+                panelColor = new Color32(3, 3, 3, 255);
+                Settings.textColors[1] = Color.white;
+                Main.GetIndex("Menu Theme").overlapText = "Shadow";
+            }
+            if (c == 30)
+            {
+                menuColor = new Color32(10, 10, 15, 255);
+                btnColor1 = new Color32(0, 150, 210, 255);
+                btnColor2 = new Color32(0, 100, 140, 255);
+                catButton = new Color32(20, 180, 230, 255);
+                panelColor = new Color32(15, 15, 20, 255);
+                Settings.textColors[1] = Color.white;
+                Main.GetIndex("Menu Theme").overlapText = "Black Ice";
+            }
+            if (c == 31)
+            {
+                menuColor = new Color32(15, 5, 5, 255);
+                btnColor1 = new Color32(255, 85, 140, 255);
+                btnColor2 = new Color32(200, 60, 100, 255);
+                catButton = new Color32(255, 110, 160, 255);
+                panelColor = new Color32(40, 15, 20, 255);
+                Settings.textColors[1] = Color.white;
+                Main.GetIndex("Menu Theme").overlapText = "Phantom Blaze";
             }
         }
 
@@ -481,233 +731,162 @@ namespace StupidTemplate.Menu
         public static bool isSphereEnabled = true;
 
 
-        public static void GunTemplate(System.Action action, System.Action disableAction, bool enableRig = false) // came with this template, W
+        public static void Gun() // friend helped :)
         {
-            if (ControllerInputPoller.instance.rightControllerGripFloat > 0.1f || UnityInput.Current.GetMouseButton(1))
+            bool gripActive = ControllerInputPoller.instance.rightControllerGripFloat > 0.1f;
+            bool mouseRight = UnityInput.Current.GetMouseButton(1);
+
+            if (gripActive || mouseRight)
             {
-                if (Physics.Raycast(GorillaLocomotion.GTPlayer.Instance.rightControllerTransform.position, -GorillaLocomotion.GTPlayer.Instance.rightControllerTransform.up, out var hitinfo))
+                Vector3 origin;
+                Vector3 dir;
+                Vector3 startPos;
+
+                if (mouseRight)
                 {
-                    if (Mouse.current.rightButton.isPressed)
-                    {
-                        Camera cam = GameObject.Find("Shoulder Camera").GetComponent<Camera>();
-                        Ray ray = cam.ScreenPointToRay(Mouse.current.position.ReadValue());
-                        Physics.Raycast(ray, out hitinfo, 100);
-                    }
-
-                    if (GunSphere == null)
-                    {
-                        GunSphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-                        GunSphere.transform.localScale = isSphereEnabled ? new Vector3(0.1f, 0.1f, 0.1f) : new Vector3(0f, 0f, 0f);
-                        GunSphere.GetComponent<Renderer>().material.shader = Shader.Find("GorillaTag/UberShader");
-                        GunSphere.GetComponent<Renderer>().material.color = currentGunColor.color;
-                        GameObject.Destroy(GunSphere.GetComponent<BoxCollider>());
-                        GameObject.Destroy(GunSphere.GetComponent<Rigidbody>());
-                        GameObject.Destroy(GunSphere.GetComponent<Collider>());
-
-                        lineRenderer = GunSphere.AddComponent<LineRenderer>();
-                        lineRenderer.material = new Material(Shader.Find("Sprites/Default"));
-                        lineRenderer.widthCurve = AnimationCurve.Linear(0, 0.01f, 1, 0.01f);
-                        lineRenderer.startColor = currentGunColor.color;
-                        lineRenderer.endColor = currentGunColor.color;
-
-                        linePositions = new Vector3[50];
-                        for (int i = 0; i < linePositions.Length; i++)
-                        {
-                            linePositions[i] = GorillaLocomotion.GTPlayer.Instance.rightControllerTransform.position;
-                        }
-                    }
-
-                    GunSphere.transform.position = hitinfo.point;
-
-                    timeCounter += Time.deltaTime;
-
-                    Vector3 pos1 = GorillaLocomotion.GTPlayer.Instance.rightControllerTransform.position;
-                    Vector3 direction = (hitinfo.point - pos1).normalized;
-                    float distance = Vector3.Distance(pos1, hitinfo.point);
-
-                    Vector3 controller = pos1 - previousControllerPosition;
-                    previousControllerPosition = pos1;
-
-                    if (ControllerInputPoller.instance.rightControllerIndexFloat > 0.1f || Mouse.current.leftButton.isPressed)
-                    {
-                        mods.lineRenderer.startColor = Color.blue;
-                        mods.lineRenderer.endColor = Color.blue;
-                        mods.GunSphere.GetComponent<Renderer>().material.shader = Shader.Find("GUI/Text Shader");
-                        mods.GunSphere.GetComponent<Renderer>().material.color = Color.blue;
-                        action.Invoke();
-                    }
-                    else
-                    {
-                        GunSphere.GetComponent<Renderer>().material.color = currentGunColor.color;
-                        lineRenderer.startColor = currentGunColor.color;
-                        lineRenderer.endColor = currentGunColor.color;
-                        if (enableRig)
-                        {
-                            GorillaTagger.Instance.offlineVRRig.enabled = true;
-                        }
-                        else
-                        {
-                            disableAction.Invoke();
-                        }
-                    }
-
-                    for (int i = 0; i < linePositions.Length; i++)
-                    {
-                        float t = i / (float)(linePositions.Length - 1);
-                        Vector3 linePos = Vector3.Lerp(pos1, hitinfo.point, t);
-
-                        linePositions[i] += controller * 0.5f;
-                        linePositions[i] += UnityEngine.Random.insideUnitSphere * 0.01f;
-                        linePositions[i] = Vector3.Lerp(linePositions[i], linePos, Time.deltaTime * num);
-                    }
-
-                    lineRenderer.positionCount = linePositions.Length;
-                    lineRenderer.SetPositions(linePositions);                    
+                    Camera cam = GameObject.Find("Shoulder Camera").GetComponent<Camera>();
+                    Ray ray = cam.ScreenPointToRay(Mouse.current.position.ReadValue());
+                    origin = ray.origin;
+                    dir = ray.direction.normalized;
+                    startPos = GorillaLocomotion.GTPlayer.Instance.headCollider.transform.position + GorillaLocomotion.GTPlayer.Instance.headCollider.transform.forward * 0.25f;
                 }
-            }
-
-            if (GunSphere != null && (ControllerInputPoller.instance.rightControllerGripFloat <= 0.1f && !UnityInput.Current.GetMouseButton(1)))
-            {
-                GameObject.Destroy(GunSphere);
-                GameObject.Destroy(lineRenderer);
-                timeCounter = 0f;
-                linePositions = null;
-            }
-        }
-        public static void Gun() // came with this template, W
-        {
-            if (ControllerInputPoller.instance.rightControllerGripFloat > 0.1f || UnityInput.Current.GetMouseButton(1))
-            {
-                if (Physics.Raycast(GorillaLocomotion.GTPlayer.Instance.rightControllerTransform.position, -GorillaLocomotion.GTPlayer.Instance.rightControllerTransform.up, out var hitinfo))
+                else
                 {
-                    if (Mouse.current.rightButton.isPressed)
-                    {
-                        Camera cam = GameObject.Find("Shoulder Camera").GetComponent<Camera>();
-                        Ray ray = cam.ScreenPointToRay(Mouse.current.position.ReadValue());
-                        Physics.Raycast(ray, out hitinfo, 100);
-                    }
-
-                    if (GunSphere == null)
-                    {
-                        GunSphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-                        GunSphere.transform.localScale = isSphereEnabled ? new Vector3(0.1f, 0.1f, 0.1f) : new Vector3(0f, 0f, 0f);
-                        GunSphere.GetComponent<Renderer>().material.shader = Shader.Find("GorillaTag/UberShader");
-                        GunSphere.GetComponent<Renderer>().material.color = currentGunColor.color;
-                        GameObject.Destroy(GunSphere.GetComponent<BoxCollider>());
-                        GameObject.Destroy(GunSphere.GetComponent<Rigidbody>());
-                        GameObject.Destroy(GunSphere.GetComponent<Collider>());
-
-                        lineRenderer = GunSphere.AddComponent<LineRenderer>();
-                        lineRenderer.material = new Material(Shader.Find("Sprites/Default"));
-                        lineRenderer.widthCurve = AnimationCurve.Linear(0, 0.01f, 1, 0.01f);
-                        lineRenderer.startColor = currentGunColor.color;
-                        lineRenderer.endColor = currentGunColor.color;
-
-                        linePositions = new Vector3[50];
-                        for (int i = 0; i < linePositions.Length; i++)
-                        {
-                            linePositions[i] = GorillaLocomotion.GTPlayer.Instance.rightControllerTransform.position;
-                        }
-                    }
-
-                    GunSphere.transform.position = hitinfo.point;
-
-                    timeCounter += Time.deltaTime;
-
-                    Vector3 pos1 = GorillaLocomotion.GTPlayer.Instance.rightControllerTransform.position;
-                    Vector3 direction = (hitinfo.point - pos1).normalized;
-                    float distance = Vector3.Distance(pos1, hitinfo.point);
-
-                    Vector3 controller = pos1 - previousControllerPosition;
-                    previousControllerPosition = pos1;
-
-                    for (int i = 0; i < linePositions.Length; i++)
-                    {
-                        float t = i / (float)(linePositions.Length - 1);
-                        Vector3 linePos = Vector3.Lerp(pos1, hitinfo.point, t);
-
-                        linePositions[i] += controller * 0.5f;
-                        linePositions[i] += UnityEngine.Random.insideUnitSphere * 0.01f;
-                        linePositions[i] = Vector3.Lerp(linePositions[i], linePos, Time.deltaTime * num);
-                    }
-
-                    lineRenderer.positionCount = linePositions.Length;
-                    lineRenderer.SetPositions(linePositions);
-
-                    GunSphere.GetComponent<Renderer>().material.color = currentGunColor.color;
-                    lineRenderer.startColor = currentGunColor.color;
-                    lineRenderer.endColor = currentGunColor.color;
+                    origin = GorillaLocomotion.GTPlayer.Instance.rightControllerTransform.position;
+                    dir = -GorillaLocomotion.GTPlayer.Instance.rightControllerTransform.up;
+                    startPos = origin;
                 }
-            }
 
-            if (GunSphere != null && (ControllerInputPoller.instance.rightControllerGripFloat <= 0.1f && !UnityInput.Current.GetMouseButton(1)))
-            {
-                GameObject.Destroy(GunSphere);
-                GameObject.Destroy(lineRenderer);
-                timeCounter = 0f;
-                linePositions = null;
-            }
-        }
-
-        public static VRRig lockon;
-        public static VRRig rigg;
-
-
-        public static void GunTemplateLockon(System.Action action, System.Action disableAction, bool enableRig = false)
-        {
-            if (ControllerInputPoller.instance.rightControllerGripFloat > 0.1f || UnityInput.Current.GetMouseButton(1))
-            {
-                if (Physics.Raycast(GorillaLocomotion.GTPlayer.Instance.rightControllerTransform.position, -GorillaLocomotion.GTPlayer.Instance.rightControllerTransform.up, out var hitinfo))
+                if (Physics.Raycast(origin, dir, out var hitinfo, 100f))
                 {
-                    if (Mouse.current.rightButton.isPressed)
-                    {
-                        Camera cam = GameObject.Find("Shoulder Camera").GetComponent<Camera>();
-                        Ray ray = cam.ScreenPointToRay(Mouse.current.position.ReadValue());
-                        Physics.Raycast(ray, out hitinfo, 100);
-                    }
-
                     if (mods.GunSphere == null)
                     {
                         mods.GunSphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-                        mods.GunSphere.transform.localScale = mods.isSphereEnabled ? new Vector3(0.1f, 0.1f, 0.1f) : new Vector3(0f, 0f, 0f);
-                        mods.GunSphere.GetComponent<Renderer>().material.shader = Shader.Find("GorillaTag/UberShader");
-                        mods.GunSphere.GetComponent<Renderer>().material.color = mods.currentGunColor.color;
+                        mods.GunSphere.transform.localScale = mods.isSphereEnabled ? Vector3.one * 0.1f : Vector3.zero;
+                        var renderer = mods.GunSphere.GetComponent<Renderer>();
+                        renderer.material.shader = Shader.Find("GorillaTag/UberShader");
+                        renderer.material.color = mods.currentGunColor.color;
                         GameObject.Destroy(mods.GunSphere.GetComponent<BoxCollider>());
                         GameObject.Destroy(mods.GunSphere.GetComponent<Rigidbody>());
                         GameObject.Destroy(mods.GunSphere.GetComponent<Collider>());
-
                         mods.lineRenderer = mods.GunSphere.AddComponent<LineRenderer>();
-                        mods.lineRenderer.material = new Material(Shader.Find("Sprites/Default"));
-                        mods.lineRenderer.widthCurve = AnimationCurve.Linear(0, 0.01f, 1, 0.01f);
+                        mods.lineRenderer.material.shader = Shader.Find("GorillaTag/UberShader");
+                        mods.lineRenderer.widthCurve = AnimationCurve.Constant(0, 1, 0.01f);
                         mods.lineRenderer.startColor = mods.currentGunColor.color;
                         mods.lineRenderer.endColor = mods.currentGunColor.color;
-
-                        mods.linePositions = new Vector3[50];
-                        for (int i = 0; i < mods.linePositions.Length; i++)
-                        {
-                            mods.linePositions[i] = GorillaLocomotion.GTPlayer.Instance.rightControllerTransform.position;
-                        }
+                        mods.linePositions = new Vector3[60];
                     }
-
                     mods.GunSphere.transform.position = hitinfo.point;
+                    Vector3 endPos = hitinfo.point;
+                    Vector3 forward = (endPos - startPos).normalized;
+                    float length = Vector3.Distance(startPos, endPos);
+                    Vector3 axis1 = Vector3.Cross(forward, Vector3.up);
+                    if (axis1.sqrMagnitude < 0.01f) axis1 = Vector3.Cross(forward, Vector3.forward);
+                    axis1.Normalize();
+                    Vector3 axis2 = Vector3.Cross(forward, axis1).normalized;
+                    float coils = 2000f;
+                    float radius = 0.2f;
+                    float speed = Time.time * 15f;
+                    for (int i = 0; i < mods.linePositions.Length; i++)
+                    {
+                        float t = i / (float)(mods.linePositions.Length - 1);
+                        Vector3 pointAlong = startPos + forward * (t * length);
+                        float angle = coils * 2 * Mathf.PI * t + speed;
+                        Vector3 coilOffset = Mathf.Cos(angle) * axis1 * radius + Mathf.Sin(angle) * axis2 * radius;
+                        mods.linePositions[i] = pointAlong + coilOffset;
+                    }
+                    mods.lineRenderer.positionCount = mods.linePositions.Length;
+                    mods.lineRenderer.SetPositions(mods.linePositions);
+                    mods.GunSphere.GetComponent<Renderer>().material.color = mods.currentGunColor.color;
+                    mods.lineRenderer.startColor = mods.currentGunColor.color;
+                    mods.lineRenderer.endColor = mods.currentGunColor.color;
+                }
+            }
+            else if (mods.GunSphere != null)
+            {
+                GameObject.Destroy(mods.GunSphere);
+                GameObject.Destroy(mods.lineRenderer);
+                mods.linePositions = null;
+            }
+        }
 
-                    mods.timeCounter += Time.deltaTime;
+        public static VRRig rigg;
+        public static VRRig lockon;
+        public static void GunTemplateLockon(System.Action action, System.Action disableAction, bool enableRig = false) // friend helped :)
+        {
+            bool gripActive = ControllerInputPoller.instance.rightControllerGripFloat > 0.1f;
+            bool mouseRight = UnityInput.Current.GetMouseButton(1);
 
-                    Vector3 pos1 = GorillaLocomotion.GTPlayer.Instance.rightControllerTransform.position;
-                    Vector3 direction = (hitinfo.point - pos1).normalized;
-                    float distance = Vector3.Distance(pos1, hitinfo.point);
+            if (gripActive || mouseRight)
+            {
+                Vector3 origin;
+                Vector3 dir;
+                Vector3 startPos;
 
-                    Vector3 controller = pos1 - mods.previousControllerPosition;
-                    mods.previousControllerPosition = pos1;
+                if (mouseRight)
+                {
+                    Camera cam = GameObject.Find("Shoulder Camera").GetComponent<Camera>();
+                    Ray ray = cam.ScreenPointToRay(Mouse.current.position.ReadValue());
+                    origin = ray.origin;
+                    dir = ray.direction.normalized;
+                    startPos = GorillaLocomotion.GTPlayer.Instance.headCollider.transform.position + GorillaLocomotion.GTPlayer.Instance.headCollider.transform.forward * 0.25f;
+                }
+                else
+                {
+                    origin = GorillaLocomotion.GTPlayer.Instance.rightControllerTransform.position;
+                    dir = -GorillaLocomotion.GTPlayer.Instance.rightControllerTransform.up;
+                    startPos = origin;
+                }
+
+                if (Physics.Raycast(origin, dir, out var hitinfo, 100f))
+                {
+                    if (mods.GunSphere == null)
+                    {
+                        mods.GunSphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+                        mods.GunSphere.transform.localScale = mods.isSphereEnabled ? Vector3.one * 0.1f : Vector3.zero;
+                        var renderer = mods.GunSphere.GetComponent<Renderer>();
+                        renderer.material.shader = Shader.Find("GorillaTag/UberShader");
+                        renderer.material.color = mods.currentGunColor.color;
+                        GameObject.Destroy(mods.GunSphere.GetComponent<BoxCollider>());
+                        GameObject.Destroy(mods.GunSphere.GetComponent<Rigidbody>());
+                        GameObject.Destroy(mods.GunSphere.GetComponent<Collider>());
+                        mods.lineRenderer = mods.GunSphere.AddComponent<LineRenderer>();
+                        mods.lineRenderer.material.shader = Shader.Find("GorillaTag/UberShader");
+                        mods.lineRenderer.widthCurve = AnimationCurve.Constant(0, 1, 0.01f);
+                        mods.lineRenderer.startColor = mods.currentGunColor.color;
+                        mods.lineRenderer.endColor = mods.currentGunColor.color;
+                        mods.linePositions = new Vector3[60];
+                    }
+                    mods.GunSphere.transform.position = hitinfo.point;
+                    Vector3 endPos = hitinfo.point;
+                    Vector3 direction = (endPos - startPos).normalized;
+                    float length = Vector3.Distance(startPos, endPos);
+                    Vector3 axis1 = Vector3.Cross(direction, Vector3.up);
+                    if (axis1.sqrMagnitude < 0.01f)
+                        axis1 = Vector3.Cross(direction, Vector3.forward);
+                    axis1.Normalize();
+                    Vector3 axis2 = Vector3.Cross(direction, axis1).normalized;
+                    int segments = mods.linePositions.Length;
+                    float coils = 2000f;
+                    float radius = 0.2f;
+                    float speed = Time.time * 15f;
+                    for (int i = 0; i < segments; i++)
+                    {
+                        float t = i / (float)(segments - 1);
+                        Vector3 pointAlong = startPos + direction * (t * length);
+                        float angle = coils * 2 * Mathf.PI * t + speed;
+                        Vector3 offset = Mathf.Cos(angle) * axis1 * radius + Mathf.Sin(angle) * axis2 * radius;
+                        mods.linePositions[i] = pointAlong + offset;
+                    }
+                    mods.lineRenderer.positionCount = segments;
+                    mods.lineRenderer.SetPositions(mods.linePositions);
 
                     if (ControllerInputPoller.instance.rightControllerIndexFloat > 0.1f || Mouse.current.leftButton.isPressed)
                     {
                         Collider collider2 = hitinfo.collider;
-                        rigg = ((collider2 != null) ? collider2.GetComponentInParent<VRRig>() : null);
+                        rigg = (collider2 != null) ? collider2.GetComponentInParent<VRRig>() : null;
                         if (lockon == null)
-                        {
                             lockon = rigg;
-                        }
                         else
                         {
                             mods.lineRenderer.startColor = Color.blue;
@@ -719,44 +898,113 @@ namespace StupidTemplate.Menu
                             mods.lineRenderer.SetPosition(1, lockon.transform.position);
                             action.Invoke();
                         }
-
                     }
                     else
                     {
-                        GunSphere.GetComponent<Renderer>().material.color = currentGunColor.color;
-                        lineRenderer.startColor = currentGunColor.color;
-                        lineRenderer.endColor = currentGunColor.color;
+                        mods.GunSphere.GetComponent<Renderer>().material.color = mods.currentGunColor.color;
+                        mods.lineRenderer.startColor = mods.currentGunColor.color;
+                        mods.lineRenderer.endColor = mods.currentGunColor.color;
                         lockon = null;
                         if (disableAction != null)
-                        {
                             disableAction.Invoke();
-                        }
                         if (enableRig)
-                        {
                             GorillaTagger.Instance.offlineVRRig.enabled = true;
-                        }
                     }
-
-                    for (int i = 0; i < mods.linePositions.Length; i++)
-                    {
-                        float t = i / (float)(mods.linePositions.Length - 1);
-                        Vector3 linePos = Vector3.Lerp(pos1, hitinfo.point, t);
-
-                        mods.linePositions[i] += controller * 0.5f;
-                        mods.linePositions[i] += UnityEngine.Random.insideUnitSphere * 0.01f;
-                        mods.linePositions[i] = Vector3.Lerp(mods.linePositions[i], linePos, Time.deltaTime * mods.num);
-                    }
-
-                    mods.lineRenderer.positionCount = mods.linePositions.Length;
-                    mods.lineRenderer.SetPositions(mods.linePositions);
                 }
             }
-
-            if (mods.GunSphere != null && (ControllerInputPoller.instance.rightControllerGripFloat <= 0.1f && !UnityInput.Current.GetMouseButton(1)))
+            else if (mods.GunSphere != null)
             {
                 GameObject.Destroy(mods.GunSphere);
                 GameObject.Destroy(mods.lineRenderer);
-                mods.timeCounter = 0f;
+                mods.linePositions = null;
+                lockon = null;
+            }
+        }
+
+        public static void GunTemplate(System.Action action, System.Action disableAction, bool enableRig = false) // friend helped :)
+        {
+            if (ControllerInputPoller.instance.rightControllerGripFloat > 0.1f || UnityInput.Current.GetMouseButton(1))
+            {
+                Vector3 origin;
+                Vector3 dir;
+                Vector3 startPos;
+                Camera cam = GameObject.Find("Shoulder Camera").GetComponent<Camera>();
+                if (UnityInput.Current.GetMouseButton(1))
+                {
+                    Ray ray = cam.ScreenPointToRay(Mouse.current.position.ReadValue());
+                    origin = ray.origin;
+                    dir = ray.direction.normalized;
+                    startPos = GorillaLocomotion.GTPlayer.Instance.headCollider.transform.position + GorillaLocomotion.GTPlayer.Instance.headCollider.transform.forward * 0.25f;
+                }
+                else
+                {
+                    origin = GorillaLocomotion.GTPlayer.Instance.rightControllerTransform.position;
+                    dir = -GorillaLocomotion.GTPlayer.Instance.rightControllerTransform.up;
+                    startPos = origin;
+                }
+                if (Physics.Raycast(origin, dir, out var hitinfo, 100f))
+                {
+                    if (mods.GunSphere == null)
+                    {
+                        mods.GunSphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+                        mods.GunSphere.transform.localScale = mods.isSphereEnabled ? Vector3.one * 0.1f : Vector3.zero;
+                        mods.GunSphere.GetComponent<Renderer>().material.shader = Shader.Find("GorillaTag/UberShader");
+                        mods.GunSphere.GetComponent<Renderer>().material.color = mods.currentGunColor.color;
+                        GameObject.Destroy(mods.GunSphere.GetComponent<BoxCollider>());
+                        GameObject.Destroy(mods.GunSphere.GetComponent<Rigidbody>());
+                        GameObject.Destroy(mods.GunSphere.GetComponent<Collider>());
+                        mods.lineRenderer = mods.GunSphere.AddComponent<LineRenderer>();
+                        mods.lineRenderer.material.shader = Shader.Find("GorillaTag/UberShader");
+                        mods.lineRenderer.widthCurve = AnimationCurve.Constant(0, 1, 0.01f);
+                        mods.lineRenderer.startColor = mods.currentGunColor.color;
+                        mods.lineRenderer.endColor = mods.currentGunColor.color;
+                        mods.linePositions = new Vector3[60];
+                    }
+                    Vector3 endPos = hitinfo.point;
+                    mods.GunSphere.transform.position = endPos;
+                    Vector3 forward = (endPos - startPos).normalized;
+                    float length = Vector3.Distance(startPos, endPos);
+                    Vector3 axis1 = Vector3.Cross(forward, Vector3.up);
+                    if (axis1.sqrMagnitude < 0.01f) axis1 = Vector3.Cross(forward, Vector3.forward);
+                    axis1.Normalize();
+                    Vector3 axis2 = Vector3.Cross(forward, axis1).normalized;
+                    float coils = 2000f;
+                    float radius = 0.2f;
+                    float speed = Time.time * 15f;
+                    for (int i = 0; i < mods.linePositions.Length; i++)
+                    {
+                        float t = i / (float)(mods.linePositions.Length - 1);
+                        Vector3 pointAlong = startPos + forward * (t * length);
+                        float angle = coils * 2 * Mathf.PI * t + speed;
+                        Vector3 coilOffset = Mathf.Cos(angle) * axis1 * radius + Mathf.Sin(angle) * axis2 * radius;
+                        mods.linePositions[i] = pointAlong + coilOffset;
+                    }
+                    mods.lineRenderer.positionCount = mods.linePositions.Length;
+                    mods.lineRenderer.SetPositions(mods.linePositions);
+                    if (ControllerInputPoller.instance.rightControllerIndexFloat > 0.1f || Mouse.current.leftButton.isPressed)
+                    {
+                        mods.GunSphere.GetComponent<Renderer>().material.shader = Shader.Find("GUI/Text Shader");
+                        mods.GunSphere.GetComponent<Renderer>().material.color = Color.blue;
+                        mods.lineRenderer.startColor = Color.blue;
+                        mods.lineRenderer.endColor = Color.blue;
+                        action.Invoke();
+                    }
+                    else
+                    {
+                        mods.GunSphere.GetComponent<Renderer>().material.shader = Shader.Find("GorillaTag/UberShader");
+                        mods.GunSphere.GetComponent<Renderer>().material.color = mods.currentGunColor.color;
+                        mods.lineRenderer.startColor = mods.currentGunColor.color;
+                        mods.lineRenderer.endColor = mods.currentGunColor.color;
+                        disableAction.Invoke();
+                        if (enableRig)
+                            GorillaTagger.Instance.offlineVRRig.enabled = true;
+                    }
+                }
+            }
+            else if (mods.GunSphere != null)
+            {
+                GameObject.Destroy(mods.GunSphere);
+                GameObject.Destroy(mods.lineRenderer);
                 mods.linePositions = null;
             }
         }
