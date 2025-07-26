@@ -9,11 +9,34 @@ using static StupidTemplate.Menu.Main;
 using GorillaTag;
 using Singularity_OS.Patches;
 using StupidTemplate.Menu;
+using UnityEngine.InputSystem;
 
 namespace Singularity_OS.Menu
 {
     public class Visual
-    {
+    { 
+        public static void HandESP()
+        {
+            foreach (VRRig vrrigs in GorillaParent.instance.vrrigs)
+            {
+                if (vrrigs != GorillaTagger.Instance.offlineVRRig)
+                {
+                    GameObject sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+                    sphere.transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
+                    sphere.transform.position = vrrigs.rightHandTransform.position;
+                    sphere.GetComponent<Renderer>().material.color = espColor;
+                    GameObject.Destroy(sphere, Time.deltaTime);
+
+                    sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+                    sphere.transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
+                    sphere.transform.position = vrrigs.leftHandTransform.position;
+                    sphere.GetComponent<Renderer>().material.color = espColor;
+                    GameObject.Destroy(sphere, Time.deltaTime);
+                }
+            }
+        }
+
+
         public static string X = "X";
         public static string O = "O";
         public static string O2 = "O";
@@ -109,7 +132,7 @@ namespace Singularity_OS.Menu
             RGBShit.FlowingRGB(motdText.GetComponent<TextMeshPro>());
 
             motdTextB = GameObject.Find("Environment Objects/LocalObjects_Prefab/TreeRoom/motdBodyText");
-            motdTextB.GetComponent<TextMeshPro>().text = string.Format("Thank you for using X O N N C Z Reborn!\nThe Menu Status is : UND\nWe really hope that you have fun while using this menu, and don't forget DO NOT GET BANNED, AND IF YOU DO IT IS NOT OUR FAULT!\n" + DateTime.Now.ToString("hh:mm tt"));
+            motdTextB.GetComponent<TextMeshPro>().text = string.Format("Thank you for using Singularity OS!\nThe Menu Status is : UND\nWe really hope that you have fun while using this menu, and don't forget DO NOT GET BANNED, AND IF YOU DO IT IS NOT OUR FAULT!\n" + DateTime.Now.ToString("hh:mm tt"));
             RGBShit.FlowingRGB(motdTextB.GetComponent<TextMeshPro>(), 100f, 3f);
 
             coc = GameObject.Find("Environment Objects/LocalObjects_Prefab/TreeRoom/CodeOfConductHeadingText");
@@ -124,156 +147,53 @@ namespace Singularity_OS.Menu
             df.SetActive(true);
 
 
+            GameObject crystalGameOBJ = GameObject.Find("Environment Objects/LocalObjects_Prefab/ForestToCave/C_Crystal_Chunk");
+            if (crystalGameOBJ != null)
+            {
+                Material crystalMat = crystalGameOBJ.GetComponent<Renderer>().material;
+                crystalMat.color = new Color32(95, 245, 145, 255);
+                Computer = GameObject.Find("Environment Objects/LocalObjects_Prefab/TreeRoom/TreeRoomInteractables/GorillaComputerObject/ComputerUI/monitor/monitorScreen");
+                Computer.GetComponent<Renderer>().material = crystalMat;
 
+                WallMonitor = GameObject.Find("Environment Objects/LocalObjects_Prefab/TreeRoom/TreeRoomBoundaryStones/BoundaryStoneSet_Forest/wallmonitorforestbg");
+                WallMonitor.GetComponent<Renderer>().material = crystalMat;
 
-            mat = new Material(Shader.Find("GorillaTag/UberShader"));
-            mat.color = Color.blue;
-            Computer = GameObject.Find("Environment Objects/LocalObjects_Prefab/TreeRoom/TreeRoomInteractables/GorillaComputerObject/ComputerUI/monitor/monitorScreen");
-            Computer.GetComponent<Renderer>().material = mat;
+                KeyBoard = GameObject.Find("Environment Objects/LocalObjects_Prefab/TreeRoom/TreeRoomInteractables/GorillaComputerObject/ComputerUI/keyboard (1)");
+                KeyBoard.GetComponent<Renderer>().material = crystalMat;               
 
-            mat = new Material(Shader.Find("GorillaTag/UberShader"));
-            mat.color = Color.blue;
-            GameObject WallMonitor = GameObject.Find("Environment Objects/LocalObjects_Prefab/TreeRoom/TreeRoomBoundaryStones/BoundaryStoneSet_Forest/wallmonitorforestbg");
-            WallMonitor.GetComponent<Renderer>().material = mat;
-
-            KeyBoard = GameObject.Find("Environment Objects/LocalObjects_Prefab/TreeRoom/TreeRoomInteractables/GorillaComputerObject/ComputerUI/keyboard (1)");
-            KeyBoard.GetComponent<Renderer>().material = mat;
-
-            GameObject K1 = GameObject.Find("Environment Objects/LocalObjects_Prefab/TreeRoom/TreeRoomInteractables/GorillaComputerObject/ComputerUI/keyboard (1)/Buttons/Keys/a");
-            K1.GetComponent<Renderer>().material.color = Color.Lerp(menuColor, Color.black, Mathf.PingPong(Time.time, 1f));
-
-            GameObject K2 = GameObject.Find("Environment Objects/LocalObjects_Prefab/TreeRoom/TreeRoomInteractables/GorillaComputerObject/ComputerUI/keyboard (1)/Buttons/Keys/b");
-            K2.GetComponent<Renderer>().material.color = Color.Lerp(menuColor, Color.black, Mathf.PingPong(Time.time, 1f));
-
-            GameObject K3 = GameObject.Find("Environment Objects/LocalObjects_Prefab/TreeRoom/TreeRoomInteractables/GorillaComputerObject/ComputerUI/keyboard (1)/Buttons/Keys/c");
-            K3.GetComponent<Renderer>().material.color = Color.Lerp(menuColor, Color.black, Mathf.PingPong(Time.time, 1f));
-
-            GameObject K4 = GameObject.Find("Environment Objects/LocalObjects_Prefab/TreeRoom/TreeRoomInteractables/GorillaComputerObject/ComputerUI/keyboard (1)/Buttons/Keys/d");
-            K4.GetComponent<Renderer>().material.color = Color.Lerp(menuColor, Color.black, Mathf.PingPong(Time.time, 1f));
-
-            GameObject K5 = GameObject.Find("Environment Objects/LocalObjects_Prefab/TreeRoom/TreeRoomInteractables/GorillaComputerObject/ComputerUI/keyboard (1)/Buttons/Keys/e");
-            K5.GetComponent<Renderer>().material.color = Color.Lerp(menuColor, Color.black, Mathf.PingPong(Time.time, 1f));
-
-            GameObject k6 = GameObject.Find("Environment Objects/LocalObjects_Prefab/TreeRoom/TreeRoomInteractables/GorillaComputerObject/ComputerUI/keyboard (1)/Buttons/Keys/f");
-            k6.GetComponent<Renderer>().material.color = Color.Lerp(menuColor, Color.black, Mathf.PingPong(Time.time, 1f));
-
-            GameObject k7 = GameObject.Find("Environment Objects/LocalObjects_Prefab/TreeRoom/TreeRoomInteractables/GorillaComputerObject/ComputerUI/keyboard (1)/Buttons/Keys/g");
-            k7.GetComponent<Renderer>().material.color = Color.Lerp(menuColor, Color.black, Mathf.PingPong(Time.time, 1f));
-
-            GameObject k8 = GameObject.Find("Environment Objects/LocalObjects_Prefab/TreeRoom/TreeRoomInteractables/GorillaComputerObject/ComputerUI/keyboard (1)/Buttons/Keys/h");
-            k8.GetComponent<Renderer>().material.color = Color.Lerp(menuColor, Color.black, Mathf.PingPong(Time.time, 1f));
-
-            GameObject k9 = GameObject.Find("Environment Objects/LocalObjects_Prefab/TreeRoom/TreeRoomInteractables/GorillaComputerObject/ComputerUI/keyboard (1)/Buttons/Keys/i");
-            k9.GetComponent<Renderer>().material.color = Color.Lerp(menuColor, Color.black, Mathf.PingPong(Time.time, 1f));
-
-            GameObject k10 = GameObject.Find("Environment Objects/LocalObjects_Prefab/TreeRoom/TreeRoomInteractables/GorillaComputerObject/ComputerUI/keyboard (1)/Buttons/Keys/j");
-            k10.GetComponent<Renderer>().material.color = Color.Lerp(menuColor, Color.black, Mathf.PingPong(Time.time, 1f));
-
-            GameObject k11 = GameObject.Find("Environment Objects/LocalObjects_Prefab/TreeRoom/TreeRoomInteractables/GorillaComputerObject/ComputerUI/keyboard (1)/Buttons/Keys/k");
-            k11.GetComponent<Renderer>().material.color = Color.Lerp(menuColor, Color.black, Mathf.PingPong(Time.time, 1f));
-
-            GameObject k12 = GameObject.Find("Environment Objects/LocalObjects_Prefab/TreeRoom/TreeRoomInteractables/GorillaComputerObject/ComputerUI/keyboard (1)/Buttons/Keys/l");
-            k12.GetComponent<Renderer>().material.color = Color.Lerp(menuColor, Color.black, Mathf.PingPong(Time.time, 1f));
-
-            GameObject k13 = GameObject.Find("Environment Objects/LocalObjects_Prefab/TreeRoom/TreeRoomInteractables/GorillaComputerObject/ComputerUI/keyboard (1)/Buttons/Keys/m");
-            k13.GetComponent<Renderer>().material.color = Color.Lerp(menuColor, Color.black, Mathf.PingPong(Time.time, 1f));
-
-            GameObject k14 = GameObject.Find("Environment Objects/LocalObjects_Prefab/TreeRoom/TreeRoomInteractables/GorillaComputerObject/ComputerUI/keyboard (1)/Buttons/Keys/n");
-            k14.GetComponent<Renderer>().material.color = Color.Lerp(menuColor, Color.black, Mathf.PingPong(Time.time, 1f));
-
-            GameObject k15 = GameObject.Find("Environment Objects/LocalObjects_Prefab/TreeRoom/TreeRoomInteractables/GorillaComputerObject/ComputerUI/keyboard (1)/Buttons/Keys/o");
-            k15.GetComponent<Renderer>().material.color = Color.Lerp(menuColor, Color.black, Mathf.PingPong(Time.time, 1f));
-
-            GameObject k16 = GameObject.Find("Environment Objects/LocalObjects_Prefab/TreeRoom/TreeRoomInteractables/GorillaComputerObject/ComputerUI/keyboard (1)/Buttons/Keys/p");
-            k16.GetComponent<Renderer>().material.color = Color.Lerp(menuColor, Color.black, Mathf.PingPong(Time.time, 1f));
-
-            GameObject k17 = GameObject.Find("Environment Objects/LocalObjects_Prefab/TreeRoom/TreeRoomInteractables/GorillaComputerObject/ComputerUI/keyboard (1)/Buttons/Keys/q");
-            k17.GetComponent<Renderer>().material.color = Color.Lerp(menuColor, Color.black, Mathf.PingPong(Time.time, 1f));
-
-            GameObject k125 = GameObject.Find("Environment Objects/LocalObjects_Prefab/TreeRoom/TreeRoomInteractables/GorillaComputerObject/ComputerUI/keyboard (1)/Buttons/Keys/r");
-            k125.GetComponent<Renderer>().material.color = Color.Lerp(menuColor, Color.black, Mathf.PingPong(Time.time, 1f));
-
-            GameObject k18 = GameObject.Find("Environment Objects/LocalObjects_Prefab/TreeRoom/TreeRoomInteractables/GorillaComputerObject/ComputerUI/keyboard (1)/Buttons/Keys/s");
-            k18.GetComponent<Renderer>().material.color = Color.Lerp(menuColor, Color.black, Mathf.PingPong(Time.time, 1f));
-
-            GameObject k19 = GameObject.Find("Environment Objects/LocalObjects_Prefab/TreeRoom/TreeRoomInteractables/GorillaComputerObject/ComputerUI/keyboard (1)/Buttons/Keys/t");
-            k19.GetComponent<Renderer>().material.color = Color.Lerp(menuColor, Color.black, Mathf.PingPong(Time.time, 1f));
-
-            GameObject k20 = GameObject.Find("Environment Objects/LocalObjects_Prefab/TreeRoom/TreeRoomInteractables/GorillaComputerObject/ComputerUI/keyboard (1)/Buttons/Keys/u");
-            k20.GetComponent<Renderer>().material.color = Color.Lerp(menuColor, Color.black, Mathf.PingPong(Time.time, 1f));
-
-            GameObject k21 = GameObject.Find("Environment Objects/LocalObjects_Prefab/TreeRoom/TreeRoomInteractables/GorillaComputerObject/ComputerUI/keyboard (1)/Buttons/Keys/v");
-            k21.GetComponent<Renderer>().material.color = Color.Lerp(menuColor, Color.black, Mathf.PingPong(Time.time, 1f));
-
-            GameObject k22 = GameObject.Find("Environment Objects/LocalObjects_Prefab/TreeRoom/TreeRoomInteractables/GorillaComputerObject/ComputerUI/keyboard (1)/Buttons/Keys/w");
-            k22.GetComponent<Renderer>().material.color = Color.Lerp(menuColor, Color.black, Mathf.PingPong(Time.time, 1f));
-
-            GameObject k23 = GameObject.Find("Environment Objects/LocalObjects_Prefab/TreeRoom/TreeRoomInteractables/GorillaComputerObject/ComputerUI/keyboard (1)/Buttons/Keys/x");
-            k23.GetComponent<Renderer>().material.color = Color.Lerp(menuColor, Color.black, Mathf.PingPong(Time.time, 1f));
-
-            GameObject k24 = GameObject.Find("Environment Objects/LocalObjects_Prefab/TreeRoom/TreeRoomInteractables/GorillaComputerObject/ComputerUI/keyboard (1)/Buttons/Keys/y");
-            k24.GetComponent<Renderer>().material.color = Color.Lerp(menuColor, Color.black, Mathf.PingPong(Time.time, 1f));
-
-            GameObject k25 = GameObject.Find("Environment Objects/LocalObjects_Prefab/TreeRoom/TreeRoomInteractables/GorillaComputerObject/ComputerUI/keyboard (1)/Buttons/Keys/z");
-            k25.GetComponent<Renderer>().material.color = Color.Lerp(menuColor, Color.black, Mathf.PingPong(Time.time, 1f));
-
-            GameObject n0 = GameObject.Find("Environment Objects/LocalObjects_Prefab/TreeRoom/TreeRoomInteractables/GorillaComputerObject/ComputerUI/keyboard (1)/Buttons/Keys/0");
-            n0.GetComponent<Renderer>().material.color = Color.Lerp(menuColor, Color.black, Mathf.PingPong(Time.time, 1f));
-
-            GameObject n1 = GameObject.Find("Environment Objects/LocalObjects_Prefab/TreeRoom/TreeRoomInteractables/GorillaComputerObject/ComputerUI/keyboard (1)/Buttons/Keys/1");
-            n1.GetComponent<Renderer>().material.color = Color.Lerp(menuColor, Color.black, Mathf.PingPong(Time.time, 1f));
-
-            GameObject n2 = GameObject.Find("Environment Objects/LocalObjects_Prefab/TreeRoom/TreeRoomInteractables/GorillaComputerObject/ComputerUI/keyboard (1)/Buttons/Keys/2");
-            n2.GetComponent<Renderer>().material.color = Color.Lerp(menuColor, Color.black, Mathf.PingPong(Time.time, 1f));
-
-            GameObject n3 = GameObject.Find("Environment Objects/LocalObjects_Prefab/TreeRoom/TreeRoomInteractables/GorillaComputerObject/ComputerUI/keyboard (1)/Buttons/Keys/3");
-            n3.GetComponent<Renderer>().material.color = Color.Lerp(menuColor, Color.black, Mathf.PingPong(Time.time, 1f));
-
-            GameObject n4 = GameObject.Find("Environment Objects/LocalObjects_Prefab/TreeRoom/TreeRoomInteractables/GorillaComputerObject/ComputerUI/keyboard (1)/Buttons/Keys/4");
-            n4.GetComponent<Renderer>().material.color = Color.Lerp(menuColor, Color.black, Mathf.PingPong(Time.time, 1f));
-
-            GameObject n5 = GameObject.Find("Environment Objects/LocalObjects_Prefab/TreeRoom/TreeRoomInteractables/GorillaComputerObject/ComputerUI/keyboard (1)/Buttons/Keys/5");
-            n5.GetComponent<Renderer>().material.color = Color.Lerp(menuColor, Color.black, Mathf.PingPong(Time.time, 1f));
-
-            GameObject n6 = GameObject.Find("Environment Objects/LocalObjects_Prefab/TreeRoom/TreeRoomInteractables/GorillaComputerObject/ComputerUI/keyboard (1)/Buttons/Keys/6");
-            n6.GetComponent<Renderer>().material.color = Color.Lerp(menuColor, Color.black, Mathf.PingPong(Time.time, 1f));
-
-            GameObject n7 = GameObject.Find("Environment Objects/LocalObjects_Prefab/TreeRoom/TreeRoomInteractables/GorillaComputerObject/ComputerUI/keyboard (1)/Buttons/Keys/7");
-            n7.GetComponent<Renderer>().material.color = Color.Lerp(menuColor, Color.black, Mathf.PingPong(Time.time, 1f));
-
-            GameObject n8 = GameObject.Find("Environment Objects/LocalObjects_Prefab/TreeRoom/TreeRoomInteractables/GorillaComputerObject/ComputerUI/keyboard (1)/Buttons/Keys/8");
-            n8.GetComponent<Renderer>().material.color = Color.Lerp(menuColor, Color.black, Mathf.PingPong(Time.time, 1f));
-
-            GameObject n9 = GameObject.Find("Environment Objects/LocalObjects_Prefab/TreeRoom/TreeRoomInteractables/GorillaComputerObject/ComputerUI/keyboard (1)/Buttons/Keys/9");
-            n9.GetComponent<Renderer>().material.color = Color.Lerp(menuColor, Color.black, Mathf.PingPong(Time.time, 1f));
-
-            GameObject del = GameObject.Find("Environment Objects/LocalObjects_Prefab/TreeRoom/TreeRoomInteractables/GorillaComputerObject/ComputerUI/keyboard (1)/Buttons/Keys/delete");
-            del.GetComponent<Renderer>().material.color = Color.Lerp(menuColor, Color.black, Mathf.PingPong(Time.time, 1f));
-
-            GameObject ent = GameObject.Find("Environment Objects/LocalObjects_Prefab/TreeRoom/TreeRoomInteractables/GorillaComputerObject/ComputerUI/keyboard (1)/Buttons/Keys/enterkeyforest");
-            ent.GetComponent<Renderer>().material.color = Color.Lerp(menuColor, Color.black, Mathf.PingPong(Time.time, 1f));
-
-            GameObject opt1 = GameObject.Find("Environment Objects/LocalObjects_Prefab/TreeRoom/TreeRoomInteractables/GorillaComputerObject/ComputerUI/keyboard (1)/Buttons/Keys/option 1");
-            opt1.GetComponent<Renderer>().material.color = Color.Lerp(menuColor, Color.black, Mathf.PingPong(Time.time, 1f));
-
-            GameObject opt2 = GameObject.Find("Environment Objects/LocalObjects_Prefab/TreeRoom/TreeRoomInteractables/GorillaComputerObject/ComputerUI/keyboard (1)/Buttons/Keys/option 2");
-            opt2.GetComponent<Renderer>().material.color = Color.Lerp(menuColor, Color.black, Mathf.PingPong(Time.time, 1f));
-
-            GameObject opt3 = GameObject.Find("Environment Objects/LocalObjects_Prefab/TreeRoom/TreeRoomInteractables/GorillaComputerObject/ComputerUI/keyboard (1)/Buttons/Keys/option 3");
-            opt3.GetComponent<Renderer>().material.color = Color.Lerp(menuColor, Color.black, Mathf.PingPong(Time.time, 1f));
-
-            GameObject up = GameObject.Find("Environment Objects/LocalObjects_Prefab/TreeRoom/TreeRoomInteractables/GorillaComputerObject/ComputerUI/keyboard (1)/Buttons/Keys/up");
-            up.GetComponent<Renderer>().material.color = Color.Lerp(menuColor, Color.black, Mathf.PingPong(Time.time, 1f));
-
-            GameObject down = GameObject.Find("Environment Objects/LocalObjects_Prefab/TreeRoom/TreeRoomInteractables/GorillaComputerObject/ComputerUI/keyboard (1)/Buttons/Keys/down");
-            down.GetComponent<Renderer>().material.color = Color.Lerp(menuColor, Color.black, Mathf.PingPong(Time.time, 1f));
-            GorillaKeyboardButton g = new GorillaKeyboardButton();
-            g.GetComponent<Renderer>().material.color = Color.Lerp(menuColor, Color.black, Mathf.PingPong(Time.time, 1f));
-            g.PressButtonColourUpdate();
-            g.ButtonRenderer.GetComponent<Renderer>().material.color = Color.Lerp(menuColor, Color.black, Mathf.PingPong(Time.time, 1f));
-
-            PhotonNetworkController.Instance.UpdateTriggerScreens();
+                ChangeBoardMaterial("Environment Objects/LocalObjects_Prefab/TreeRoom", 5, crystalMat, ref originalMat1);
+                ChangeBoardMaterial("Environment Objects/LocalObjects_Prefab/Forest", 13, crystalMat, ref originalMat2);
+                PhotonNetworkController.Instance.UpdateTriggerScreens();
+            }
         }
+        public static Material originalMat1;
+        public static Material originalMat2;
+
+        public static void ChangeBoardMaterial(string parentPath, int targetIndex, Material newMaterial, ref Material originalMat)
+        {
+            GameObject parent = GameObject.Find(parentPath);
+            if (parent == null)
+                return;
+            int currentIndex = 0;
+            for (int i = 0; i < parent.transform.childCount; i++)
+            {
+                GameObject childObj = parent.transform.GetChild(i).gameObject;
+                if (childObj.name.Contains("UnityTempFile"))
+                {
+                    currentIndex++;
+                    if (currentIndex == targetIndex)
+                    {
+                        Renderer renderer = childObj.GetComponent<Renderer>();
+                        if (originalMat == null)
+                            originalMat = renderer.material;
+
+                        renderer.material = newMaterial;
+                        break;
+                    }
+                }
+            }
+        }
+
 
 
         public static float sig;
@@ -282,6 +202,7 @@ namespace Singularity_OS.Menu
         public static GameObject coc2;
         public static GameObject MotdBoard;
         public static GameObject Computer;
+        public static GameObject WallMonitor;
         public static GameObject KeyBoard;
         public static GameObject motdText = null;
         public static GameObject motdTextB = null;
@@ -290,7 +211,7 @@ namespace Singularity_OS.Menu
         {
             GameObject StumpObj = new GameObject("STUMPOBJ");
             TextMeshPro textobj = StumpObj.AddComponent<TextMeshPro>();
-            textobj.text = "<color=yellow>Menu Status:</color> <color=green>Undetected</color>\n<color=purple>discord.gg/singul</color>";
+            textobj.text = "<color=yellow>Menu Status:</color> <color=green>Undetected</color>\n<color=purple>discord.gg/xaj9QMRCkV</color>";
             textobj.fontSize = 2f;
             textobj.alignment = TextAlignmentOptions.Center;
             textobj.font = GameObject.Find("motdBodyText").GetComponent<TextMeshPro>().font;
@@ -307,7 +228,7 @@ namespace Singularity_OS.Menu
         {
             foreach (VRRig vrrigs in GorillaParent.instance.vrrigs)
             {
-                if (!vrrigs.isOfflineVRRig && !vrrigs.isMyPlayer)
+                if (vrrigs != GorillaTagger.Instance.offlineVRRig)
                 {
                     GameObject Box = GameObject.CreatePrimitive(PrimitiveType.Cube);
                     Box.transform.localScale = new Vector3(0.5f, 0.5f, 0f);
@@ -324,7 +245,7 @@ namespace Singularity_OS.Menu
         {
             foreach (VRRig vrrigs in GorillaParent.instance.vrrigs)
             {
-                if (!vrrigs.isOfflineVRRig && !vrrigs.isMyPlayer)
+                if (vrrigs != GorillaTagger.Instance.offlineVRRig)
                 {
                     GameObject Box = GameObject.CreatePrimitive(PrimitiveType.Cube);
                     Box.transform.localScale = new Vector3(0.5f, 0.5f, 0f);
@@ -375,76 +296,100 @@ namespace Singularity_OS.Menu
             }
         }
 
-        public static void Test()
+        public static void XRAY()
         {
-            var ins = GorillaTagger.Instance.offlineVRRig;
-            GameObject Box = GameObject.CreatePrimitive(PrimitiveType.Cube);
-            Box.transform.localScale = new Vector3(0.5f, 0.5f, 0f);
-            Box.transform.position = ins.transform.position;
-            Object.Destroy(Box.GetComponent<BoxCollider>());
-            Box.GetComponent<Renderer>().material.shader = Shader.Find("GUI/Text Shader");
-            Box.GetComponent<Renderer>().enabled = false;
+            if (ControllerInputPoller.instance.rightControllerIndexFloat > 0.5f || Mouse.current.rightButton.isPressed)
+            {
+                foreach (MeshCollider meshCollider in Resources.FindObjectsOfTypeAll<MeshCollider>())
+                {
+                    meshCollider.GetComponent<Renderer>().material.color = new Color32(0, 0, 0, 100);
+                }
+            }
+            else
+            {
+                foreach (MeshCollider meshCollider in Resources.FindObjectsOfTypeAll<MeshCollider>())
+                {
+                    meshCollider.GetComponent<Renderer>().enabled = true;
+                }
+            }
+        }
 
-            GameObject line = GameObject.CreatePrimitive(PrimitiveType.Cube);
-            line.transform.localScale = new Vector3(0.33f, 0.03f, 0f);
-            line.transform.position = ins.transform.position + (Box.transform.up * 0.17f);
-            line.transform.rotation = Box.transform.rotation;
-            Object.Destroy(line.GetComponent<BoxCollider>());
-            line.GetComponent<Renderer>().material.shader = Shader.Find("GUI/Text Shader");
-            line.GetComponent<Renderer>().material.color = espColor;
-            Object.Destroy(line, Time.deltaTime);
 
-            line = GameObject.CreatePrimitive(PrimitiveType.Cube);
-            line.transform.localScale = new Vector3(0.33f, 0.03f, 0f);
-            line.transform.position = ins.transform.position + (Box.transform.up * -0.17f);
-            line.transform.rotation = Box.transform.rotation;
-            Object.Destroy(line.GetComponent<BoxCollider>());
-            line.GetComponent<Renderer>().material.shader = Shader.Find("GUI/Text Shader");
-            line.GetComponent<Renderer>().material.color = espColor;
-            Object.Destroy(line, Time.deltaTime);
+        public static float clr;
+        public static void wireframeEsp()
+        {
+            foreach (VRRig vrrigs in GorillaParent.instance.vrrigs)
+            {
+                if (vrrigs != GorillaTagger.Instance.offlineVRRig)
+                {
+                    GameObject wireframe = new GameObject("wireframeESP");
+                    LineRenderer lr = wireframe.AddComponent<LineRenderer>();
+                    lr.material = new Material(Shader.Find("GUI/Text Shader"));
+                    lr.widthMultiplier = 0.01f;
+                    lr.useWorldSpace = true;
+                    lr.loop = false;
+                    clr += Time.deltaTime * 0.5f;
+                    if (clr > 1f) clr = 0f;
 
-            line = GameObject.CreatePrimitive(PrimitiveType.Cube);
-            line.transform.localScale = new Vector3(0.03f, 0.35f, 0f);
-            line.transform.position = ins.transform.position + (Box.transform.right * -0.15f);
-            line.transform.rotation = Box.transform.rotation;
-            Object.Destroy(line.GetComponent<BoxCollider>());
-            line.GetComponent<Renderer>().material.shader = Shader.Find("GUI/Text Shader");
-            line.GetComponent<Renderer>().material.color = espColor;
-            Object.Destroy(line, Time.deltaTime);
+                    Color rgb = Color.HSVToRGB(clr, 1f, 1f);
+                    lr.startColor = rgb;
+                    lr.endColor = rgb;
+                    Vector3 size = new Vector3(1.5f, 1.5f, 1f) * 0.5f;
+                    Vector3 p0 = vrrigs.transform.position + new Vector3(-size.x, -size.y, -size.z);
+                    Vector3 p1 = vrrigs.transform.position + new Vector3(size.x, -size.y, -size.z);
+                    Vector3 p2 = vrrigs.transform.position + new Vector3(size.x, -size.y, size.z);
+                    Vector3 p3 = vrrigs.transform.position + new Vector3(-size.x, -size.y, size.z);
+                    Vector3 p4 = vrrigs.transform.position + new Vector3(-size.x, size.y, -size.z);
+                    Vector3 p5 = vrrigs.transform.position + new Vector3(size.x, size.y, -size.z);
+                    Vector3 p6 = vrrigs.transform.position + new Vector3(size.x, size.y, size.z);
+                    Vector3 p7 = vrrigs.transform.position + new Vector3(-size.x, size.y, size.z);
+                    Vector3[] lines = new Vector3[]
+                    {
+                    p0, p1, p1, p2, p2, p3, p3, p0,
+                    p4, p5, p5, p6, p6, p7, p7, p4,
+                    p0, p4, p1, p5, p2, p6, p3, p7,
+                    p0, p2,
+                    p1, p3,
+                    p4, p6,
+                    p5, p7,
+                    p0, p5,
+                    p1, p4,
+                    p3, p6,
+                    p2, p7,
+                    p0, p7,
+                    p3, p4,
+                    p1, p6,
+                    p2, p5
+                    };
+                    lr.positionCount = lines.Length;
+                    lr.SetPositions(lines);
 
-            line = GameObject.CreatePrimitive(PrimitiveType.Cube);
-            line.transform.localScale = new Vector3(0.03f, 0.35f, 0f);
-            line.transform.position = ins.transform.position + (Box.transform.right * 0.15f);
-            line.transform.rotation = Box.transform.rotation;
-            Object.Destroy(line.GetComponent<BoxCollider>());
-            line.GetComponent<Renderer>().material.shader = Shader.Find("GUI/Text Shader");
-            line.GetComponent<Renderer>().material.color = espColor;
-            Object.Destroy(line, Time.deltaTime);
-
-            Object.Destroy(Box);
+                    GameObject.Destroy(wireframe, Time.deltaTime);
+                }               
+            }           
         }
 
 
         public static void NameTags()
         {
-            foreach (VRRig vrigs in GorillaParent.instance.vrrigs)
+            foreach (VRRig vrrigs in GorillaParent.instance.vrrigs)
             {
-                if (!vrigs.isOfflineVRRig && !vrigs.isMyPlayer)
+                if (vrrigs != GorillaTagger.Instance.offlineVRRig)
                 {
-                    GameObject NameTags = vrigs.transform.Find("NameTags")?.gameObject;
+                    GameObject NameTags = vrrigs.transform.Find("NameTags")?.gameObject;
                     NameTags = new GameObject("NameTags");
                     TextMeshPro textMeshPro = NameTags.AddComponent<TextMeshPro>();
-                    textMeshPro.text = vrigs.OwningNetPlayer.NickName;
+                    textMeshPro.text = vrrigs.OwningNetPlayer.NickName;
                     textMeshPro.fontSize = 2f;
                     textMeshPro.alignment = TextAlignmentOptions.Center;
                     textMeshPro.color = espColor;
                     textMeshPro.font = GameObject.Find("motdBodyText").GetComponent<TextMeshPro>().font;
-                    NameTags.transform.SetParent(vrigs.transform);
+                    NameTags.transform.SetParent(vrrigs.transform);
                     Object.Destroy(NameTags, Time.deltaTime);
                     Transform Nametag = NameTags.transform;
                     Nametag.GetComponent<TextMeshPro>().renderer.material.shader = Shader.Find("GUI/Text Shader");
                     Nametag.transform.localScale = new Vector3(0.6f, 0.6f, 0.6f);
-                    Nametag.position = vrigs.headConstraint.position + new Vector3(0f, 0.4f, 0f);
+                    Nametag.position = vrrigs.headConstraint.position + new Vector3(0f, 0.4f, 0f);
                     Nametag.LookAt(Camera.main.transform.position);
                     Nametag.Rotate(0f, 180f, 0f);
                 }
@@ -507,9 +452,9 @@ namespace Singularity_OS.Menu
 
         public static void tracers()
         {
-            foreach (VRRig rig in GorillaParent.instance.vrrigs)
+            foreach (VRRig vrrigs in GorillaParent.instance.vrrigs)
             {
-                if (!rig.isOfflineVRRig && !rig.isMyPlayer)
+                if (vrrigs != GorillaTagger.Instance.offlineVRRig)
                 {
                     GameObject line = new GameObject("Line");
                     LineRenderer lineRenderer = line.AddComponent<LineRenderer>();
@@ -520,7 +465,7 @@ namespace Singularity_OS.Menu
                     lineRenderer.positionCount = 2;
                     lineRenderer.useWorldSpace = true;
                     lineRenderer.SetPosition(0, GorillaLocomotion.GTPlayer.Instance.rightControllerTransform.position);
-                    lineRenderer.SetPosition(1, rig.transform.position);
+                    lineRenderer.SetPosition(1, vrrigs.transform.position);
                     lineRenderer.material.shader = Shader.Find("GUI/Text Shader");
                     Object.Destroy(lineRenderer, Time.deltaTime);
                     Object.Destroy(line, Time.deltaTime);
@@ -529,13 +474,13 @@ namespace Singularity_OS.Menu
         }
         public static void sphereEsp()
         {
-            foreach (VRRig rig in GorillaParent.instance.vrrigs)
+            foreach (VRRig vrrigs in GorillaParent.instance.vrrigs)
             {
-                if (!rig.isOfflineVRRig && !rig.isMyPlayer)
+                if (vrrigs != GorillaTagger.Instance.offlineVRRig)
                 {
                     GameObject sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
                     sphere.transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
-                    sphere.transform.localPosition = rig.transform.position + Vector3.up;
+                    sphere.transform.localPosition = vrrigs.transform.position + Vector3.up;
                     sphere.GetComponent<SphereCollider>().enabled = false;
                     sphere.GetComponent<Renderer>().material.shader = Shader.Find("GUI/Text Shader");
                     sphere.GetComponent<Renderer>().material.color = espColor;
@@ -559,13 +504,13 @@ namespace Singularity_OS.Menu
 
         public static void headEsp()
         {
-            foreach (VRRig rig in GorillaParent.instance.vrrigs)
+            foreach (VRRig vrrigs in GorillaParent.instance.vrrigs)
             {
-                if (!rig.isOfflineVRRig && !rig.isMyPlayer)
+                if (vrrigs != GorillaTagger.Instance.offlineVRRig)
                 {
                     GameObject sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
                     sphere.transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
-                    sphere.transform.localPosition = rig.transform.position;
+                    sphere.transform.localPosition = vrrigs.transform.position;
                     sphere.GetComponent<SphereCollider>().enabled = false;
                     sphere.GetComponent<Renderer>().material.shader = Shader.Find("GUI/Text Shader");
                     sphere.GetComponent<Renderer>().material.color = espColor;
@@ -591,19 +536,19 @@ namespace Singularity_OS.Menu
 
         public static void Chams()
         {
-            foreach (VRRig rigs in GorillaParent.instance.vrrigs)
+            foreach (VRRig vrrigs in GorillaParent.instance.vrrigs)
             {
-                if (!rigs.isLocal || !rigs.isMyPlayer)
+                if (vrrigs != GorillaTagger.Instance.offlineVRRig)
                 {
-                    if (rigs.mainSkin.material.name.Contains("fected"))
+                    if (vrrigs.mainSkin.material.name.Contains("fected"))
                     {
-                        rigs.mainSkin.material.shader = Shader.Find("GUI/Text Shader");
-                        rigs.mainSkin.material.color = new Color32(255, 0, 0, 255);
+                        vrrigs.mainSkin.material.shader = Shader.Find("GUI/Text Shader");
+                        vrrigs.mainSkin.material.color = new Color32(255, 0, 0, 255);
                     }
                     else
                     {
-                        rigs.mainSkin.material.shader = Shader.Find("GorillaTag/UberShader");
-                        rigs.mainSkin.material.color = new Color32(0, 255, 0, 255);
+                        vrrigs.mainSkin.material.shader = Shader.Find("GUI/Text Shader");
+                        vrrigs.mainSkin.material.color = new Color32(0, 255, 0, 255);
                     }
                 }
             }
@@ -612,16 +557,14 @@ namespace Singularity_OS.Menu
 
         public static void ChamsOff()
         {
-            foreach (VRRig rigs in GorillaParent.instance.vrrigs)
+            foreach (VRRig vrrigs in GorillaParent.instance.vrrigs)
             {
-                if (!rigs.isOfflineVRRig || !rigs.isMyPlayer)
+                if (vrrigs != GorillaTagger.Instance.offlineVRRig)
                 {
-                    rigs.mainSkin.material.shader = Shader.Find("GorillaTag/UberShader");
-                    rigs.mainSkin.material.color = rigs.playerColor;
+                    vrrigs.mainSkin.material.shader = Shader.Find("GorillaTag/UberShader");
+                    vrrigs.mainSkin.material.color = vrrigs.playerColor;
                 }
             }
         }
-
-
     }
 }
