@@ -2,14 +2,18 @@ using AetherTemp.Menu;
 using BepInEx;
 using HarmonyLib;
 using Photon.Pun;
+using Singularity_OS.Classes;
 using Singularity_OS.Menu;
+using Singularity_OS.UmThisIsTheCameraShit;
 using StupidTemplate.Classes;
 using StupidTemplate.Mods;
 using StupidTemplate.Notifications;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using TMPro;
@@ -27,6 +31,20 @@ namespace StupidTemplate.Menu
     [HarmonyPatch("LateUpdate", MethodType.Normal)]
     public class Main : MonoBehaviour
     {
+        public static AssetBundle LoadAssetBundle(string path)
+        {
+            Stream stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(path);
+            AssetBundle bundle = AssetBundle.LoadFromStream(stream);
+            stream.Close();
+            return bundle;
+        }
+        public static void Arraylst(bool on)
+        {
+            if (on)
+                Singularity_OS.Menu.ArrayList._array = true;
+            if (!on)
+                Singularity_OS.Menu.ArrayList._array = false;
+        }
 
         public static async void LoadSoundFromURL(string url)
         {
@@ -172,109 +190,187 @@ namespace StupidTemplate.Menu
 
 
         // Constant
-        public static float num = 2f;
+        public static float num = 1f;
 
         public static void MenuDeleteTime()
         {
-            if (num == 2f)
+            if (num == 1f)
                 num = 5f; // Long
             else if (num == 5f)
                 num = 0.01f; // Fast
             else
-                num = 2f; // Default
+                num = 1f; // Default
         }
 
+        public static void menuAnimations(bool on)
+        {
+            if (on)
+                MenuAnimations = true;
+            else if (!on)
+                MenuAnimations = false;
+        }
+
+        public static bool menuToggled = false;
+        public static bool MenuAnimations = false;
+        public static bool animating = false;
+        public static bool poppedIn = false;
+        public static bool menuOpen = false;
+        public static float animationDuration = 0.3f;
+        public static float animationTimer = 0f;
+        public static Vector3 start;
+        public static Vector3 end;
 
         public static void Prefix()
         {
-
-            // Initialize Menu
             try
             {
-                    bool toOpen = (!rightHanded && ControllerInputPoller.instance.leftControllerSecondaryButton) || (rightHanded && ControllerInputPoller.instance.rightControllerSecondaryButton);
-                    bool keyboardOpen = UnityInput.Current.GetKey(keyboardButton);
+                bool toggle = (!rightHanded && ControllerInputPoller.instance.leftControllerSecondaryButton) || (rightHanded && ControllerInputPoller.instance.rightControllerSecondaryButton);
+                bool keyboardOpen = UnityInput.Current.GetKey(keyboardButton);
+                bool inputHeld = toggle || keyboardOpen;
 
-                    if (menu == null)
+                menuToggled = inputHeld;
+
+                if (menu == null)
+                {
+                    if (menuToggled)
                     {
-                        if (toOpen || keyboardOpen)
+                        CreateMenu();
+                        if (!keyboardOpen)
                         {
-                            CreateMenu();
-                            if (reference == null)
-                            {
-                                CreateReference(rightHanded);
-                            }
+                            Transform hand = rightHanded ? GorillaLocomotion.GTPlayer.Instance.rightControllerTransform : GorillaLocomotion.GTPlayer.Instance.leftControllerTransform;
+                            menu.transform.position = hand.position + hand.forward * 0.05f;
+                            menu.transform.rotation = hand.rotation;
                         }
-                    }
-                    else
-                    {
-                        if ((toOpen || keyboardOpen))
+
+                        if (reference == null)
+                            CreateReference(rightHanded);
+
+                        if (MenuAnimations)
                         {
-                            RecenterMenu(rightHanded, keyboardOpen);
+                            menu.transform.localScale = Vector3.zero;
+                            menu.SetActive(true);
+                            start = Vector3.zero;
+                            end = new Vector3(0.1f, 0.3f, 0.3825f);
+                            animating = true;
+                            poppedIn = true;
+                            animationTimer = 0f;
                         }
                         else
                         {
-                        GameObject.Find("Shoulder Camera").transform.Find("CM vcam1").gameObject.SetActive(true);
-
-                        Rigidbody comp = menu.AddComponent(typeof(Rigidbody)) as Rigidbody;
-
-                        if (rightHanded)
+                            menu.transform.localScale = new Vector3(0.1f, 0.3f, 0.3825f);
+                            menu.SetActive(true);
+                            menuOpen = true;
+                        }
+                    }
+                }
+                else
+                {
+                    if (menuToggled)
+                    {
+                        RecenterMenu(rightHanded, keyboardOpen);
+                    }
+                    else if (!animating)
+                    {
+                        if (MenuAnimations)
                         {
-                            comp.velocity = GorillaLocomotion.GTPlayer.Instance.rightHandCenterVelocityTracker.GetAverageVelocity(true, 0);
+                            start = menu.transform.localScale;
+                            end = Vector3.zero;
+                            animating = true;
+                            poppedIn = false;
+                            animationTimer = 0f;
                         }
                         else
                         {
-                            comp.velocity = GorillaLocomotion.GTPlayer.Instance.leftHandCenterVelocityTracker.GetAverageVelocity(true, 0);
-                        }
-
-                        UnityEngine.Object.Destroy(menu, num);
-                        menu = null;
-
-                        UnityEngine.Object.Destroy(reference);
-                        reference = null;
-
-                    }
-                }
-                }
-                catch (Exception exc)
-                {
-                    UnityEngine.Debug.LogError(string.Format("{0} // Error initializing at {1}: {2}", PluginInfo.Name, exc.StackTrace, exc.Message));
-                }
-
-            // Constant
-                try
-                {
-                    // Pre-Execution
-                        if (fpsObject != null)
-                        {
-                            fpsObject.text = "FPS: " + Mathf.Ceil(1f / Time.unscaledDeltaTime).ToString();
-                        }
-
-                    // Execute Enabled mods
-                        foreach (ButtonInfo[] buttonlist in buttons)
-                        {
-                            foreach (ButtonInfo v in buttonlist)
+                            GameObject.Find("Shoulder Camera").transform.Find("CM vcam1").gameObject.SetActive(true);
+                            Rigidbody comp = menu.AddComponent<Rigidbody>();
+                            if (!keyboardOpen)
                             {
-                                if (v.enabled)
-                                {
-                                    if (v.method != null)
-                                    {
-                                        try
-                                        {
-                                            v.method.Invoke();
-                                        }
-                                        catch (Exception exc)
-                                        {
-                                            UnityEngine.Debug.LogError(string.Format("{0} // Error with mod {1} at {2}: {3}", PluginInfo.Name, v.buttonText, exc.StackTrace, exc.Message));
-                                        }
-                                    }
-                                }
+                                comp.velocity = rightHanded ? GorillaLocomotion.GTPlayer.Instance.rightHandCenterVelocityTracker.GetAverageVelocity(true, 0) : GorillaLocomotion.GTPlayer.Instance.leftHandCenterVelocityTracker.GetAverageVelocity(true, 0);
+                            }
+                            UnityEngine.Object.Destroy(menu, num);
+                            menu = null;
+                            menuOpen = false;
+                            if (reference != null)
+                            {
+                                UnityEngine.Object.Destroy(reference);
+                                reference = null;
                             }
                         }
-                } catch (Exception exc)
-                {
-                    UnityEngine.Debug.LogError(string.Format("{0} // Error with executing mods at {1}: {2}", PluginInfo.Name, exc.StackTrace, exc.Message));
+                    }
                 }
+
+                if (animating && menu != null)
+                {
+                    animationTimer += Time.deltaTime;
+                    float t = Mathf.Clamp01(animationTimer / animationDuration);
+                    menu.transform.localScale = Vector3.Lerp(start, end, t);
+                    if (t >= 1f)
+                    {
+                        animating = false;
+                        if (!poppedIn)
+                        {
+                            GameObject.Find("Shoulder Camera").transform.Find("CM vcam1").gameObject.SetActive(true);
+                            Rigidbody comp = menu.AddComponent<Rigidbody>();
+                            if (!keyboardOpen)
+                            {
+                                comp.velocity = rightHanded ? GorillaLocomotion.GTPlayer.Instance.rightHandCenterVelocityTracker.GetAverageVelocity(true, 0) : GorillaLocomotion.GTPlayer.Instance.leftHandCenterVelocityTracker.GetAverageVelocity(true, 0);
+                            }
+                            UnityEngine.Object.Destroy(menu, num);
+                            menu = null;
+                            if (reference != null)
+                            {
+                                UnityEngine.Object.Destroy(reference);
+                                reference = null;
+                            }
+                            menuOpen = false;
+                        }
+                        else
+                        {
+                            menuOpen = true;
+                        }
+                    }
+                }
+            }
+            catch (Exception exc)
+            {
+                UnityEngine.Debug.LogError($"{PluginInfo.Name} {exc.StackTrace} {exc.Message}");
+            }
+
+            try
+            {
+                if (fpsObject != null)
+                    fpsObject.text = "FPS: " + Mathf.Ceil(1f / Time.unscaledDeltaTime).ToString();
+
+                foreach (ButtonInfo[] buttonlist in buttons)
+                {
+                    foreach (ButtonInfo v in buttonlist)
+                    {
+                        if (v.enabled && v.method != null)
+                        {
+                            try
+                            {
+                                v.method.Invoke();
+                            }
+                            catch (Exception exc)
+                            {
+                                UnityEngine.Debug.LogError($"{PluginInfo.Name} {v.buttonText} {exc.StackTrace} {exc.Message}");
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception exc)
+            {
+                UnityEngine.Debug.LogError($"{PluginInfo.Name} {exc.StackTrace} {exc.Message}");
+            }
         }
+
+
+
+
+
+
+
 
         // Functions
 
@@ -464,6 +560,10 @@ namespace StupidTemplate.Menu
             }
         }
 
+
+        public static float rgbTimer = 0f;
+
+
         // Functions
         Color peach = new Color(255f / 255f, 229f / 255f, 180f / 255f);
         Color mainc = new Color(176f / 255f, 153f / 255f, 128f / 255f);
@@ -474,7 +574,6 @@ namespace StupidTemplate.Menu
             UnityEngine.Object.Destroy(menu.GetComponent<BoxCollider>());
             UnityEngine.Object.Destroy(menu.GetComponent<Renderer>());
             menu.transform.localScale = new Vector3(0.1f, 0.3f, 0.3825f);
-
             GameObject menuBackground = GameObject.CreatePrimitive(PrimitiveType.Cube);
             UnityEngine.Object.Destroy(menuBackground.GetComponent<Rigidbody>());
             UnityEngine.Object.Destroy(menuBackground.GetComponent<BoxCollider>());
@@ -556,6 +655,7 @@ namespace StupidTemplate.Menu
             }
 
 
+
             canvasObject = new GameObject();
             canvasObject.transform.parent = menu.transform;
             Canvas canvas = canvasObject.AddComponent<Canvas>();
@@ -594,7 +694,7 @@ namespace StupidTemplate.Menu
             if (!newss && !info)
             {
                 // Modules
-                if (buttonsType != 0 && buttonsType != 3 && buttonsType != 4 && buttonsType != 5 && buttonsType != 6 && buttonsType != 7 && buttonsType != 8 && buttonsType != 9 && buttonsType != 10 && buttonsType != 12 && buttonsType != 13)
+                if (buttonsType != 0 && buttonsType != 3 && buttonsType != 4 && buttonsType != 5 && buttonsType != 6 && buttonsType != 7 && buttonsType != 8 && buttonsType != 9 && buttonsType != 10 && buttonsType != 12 && buttonsType != 13 && buttonsType != 14 && buttonsType != 15)
                 {
                     ButtonInfo[] activeButtons = buttons[buttonsType].Skip(pageNumber * buttonsPerPage).Take(buttonsPerPage).ToArray();
                     for (int i = 0; i < activeButtons.Length; i++)
@@ -617,6 +717,7 @@ namespace StupidTemplate.Menu
             Shit();
             CreateHomeButton();
             CreateDisconnectButton();
+            CreatePageButtons();
         }
 
 
@@ -633,7 +734,7 @@ namespace StupidTemplate.Menu
             gameObject.transform.rotation = Quaternion.identity;
 
             gameObject.transform.localScale = new Vector3(0.01f, 0.2f, 0.071f);
-            gameObject.transform.localPosition = new Vector3(0.514f, -0.25f, -0.29f);
+            gameObject.transform.localPosition = new Vector3(0.514f, -0.30f, -0.29f);
 
             gameObject.GetComponent<Renderer>().enabled = false;
 
@@ -741,7 +842,7 @@ namespace StupidTemplate.Menu
             gameObject.transform.rotation = Quaternion.identity;
 
             gameObject.transform.localScale = new Vector3(0.01f, 0.2f, 0.071f);
-            gameObject.transform.localPosition = new Vector3(0.514f, -0.46f, -0.29f);
+            gameObject.transform.localPosition = new Vector3(0.514f, -0.51f, -0.29f);
 
             gameObject.GetComponent<Renderer>().enabled = false;
 
@@ -834,6 +935,253 @@ namespace StupidTemplate.Menu
             component.sizeDelta = new Vector2(.05f, .02f);
             component.localPosition = new Vector3(0.0523f, gameObject.transform.position.y, gameObject.transform.position.z);
             component.rotation = Quaternion.Euler(new Vector3(180f, 90f, 90f));
+        }
+
+        public static bool isInCat = false;
+        public static void CreatePageButtons()
+        {
+            GameObject gameObject = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            GameObject gameObject2 = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            GameObject BaseA = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            GameObject BaseB = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            GameObject BaseBB = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            GameObject BaseAA = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            GameObject RoundCornerA = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
+            GameObject RoundCornerAA = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
+            GameObject RoundCornerB = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
+            GameObject RoundCornerBB = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
+            GameObject RoundCornerC = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
+            GameObject RoundCornerCC = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
+            GameObject RoundCornerD = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
+            GameObject RoundCornerDD = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
+            if (isInCat)
+            {
+                // Next Page            
+                if (!UnityInput.Current.GetKey(KeyCode.Q))
+                {
+                    gameObject.layer = 2;
+                }
+                UnityEngine.Object.Destroy(gameObject.GetComponent<Rigidbody>());
+                gameObject.GetComponent<BoxCollider>().isTrigger = true;
+                gameObject.transform.parent = menu.transform;
+                gameObject.transform.rotation = Quaternion.identity;
+
+                gameObject.transform.localScale = new Vector3(0.01f, 0.2f, 0.071f);
+                gameObject.transform.localPosition = new Vector3(0.514f, -0.09f, -0.29f);
+
+                gameObject.GetComponent<Renderer>().enabled = false;
+
+                float Bevel = 0.03f;
+                BaseA.GetComponent<Renderer>().enabled = true;
+                UnityEngine.Object.Destroy(BaseA.GetComponent<Collider>());
+                BaseA.transform.parent = menu.transform;
+                BaseA.transform.rotation = Quaternion.identity;
+                BaseA.transform.localPosition = gameObject.transform.localPosition;
+                BaseA.transform.localScale = gameObject.transform.localScale + new Vector3(0f, Bevel * -2.55f, 0f);
+
+                BaseB.GetComponent<Renderer>().enabled = true;
+                UnityEngine.Object.Destroy(BaseB.GetComponent<Collider>());
+                BaseB.transform.parent = menu.transform;
+                BaseB.transform.rotation = Quaternion.identity;
+                BaseB.transform.localPosition = gameObject.transform.localPosition;
+                BaseB.transform.localScale = gameObject.transform.localScale + new Vector3(0f, 0f, -Bevel * 2f);
+              
+                RoundCornerA.GetComponent<Renderer>().enabled = true;
+                UnityEngine.Object.Destroy(RoundCornerA.GetComponent<Collider>());
+                RoundCornerA.transform.parent = menu.transform;
+                RoundCornerA.transform.rotation = Quaternion.identity * Quaternion.Euler(0f, 0f, 90f);
+                RoundCornerA.transform.localPosition = gameObject.transform.localPosition + new Vector3(0f, (gameObject.transform.localScale.y / 2f) - (Bevel * 1.275f), (gameObject.transform.localScale.z / 2f) - Bevel);
+                RoundCornerA.transform.localScale = new Vector3(Bevel * 2.55f, gameObject.transform.localScale.x / 2f, Bevel * 2f);
+            
+                RoundCornerB.GetComponent<Renderer>().enabled = true;
+                UnityEngine.Object.Destroy(RoundCornerB.GetComponent<Collider>());
+                RoundCornerB.transform.parent = menu.transform;
+                RoundCornerB.transform.rotation = Quaternion.identity * Quaternion.Euler(0f, 0f, 90f);
+                RoundCornerB.transform.localPosition = gameObject.transform.localPosition + new Vector3(0f, -(gameObject.transform.localScale.y / 2f) + (Bevel * 1.275f), (gameObject.transform.localScale.z / 2f) - Bevel);
+                RoundCornerB.transform.localScale = new Vector3(Bevel * 2.55f, gameObject.transform.localScale.x / 2f, Bevel * 2f);
+
+                RoundCornerC.GetComponent<Renderer>().enabled = true;
+                UnityEngine.Object.Destroy(RoundCornerC.GetComponent<Collider>());
+                RoundCornerC.transform.parent = menu.transform;
+                RoundCornerC.transform.rotation = Quaternion.identity * Quaternion.Euler(0f, 0f, 90f);
+                RoundCornerC.transform.localPosition = gameObject.transform.localPosition + new Vector3(0f, (gameObject.transform.localScale.y / 2f) - (Bevel * 1.275f), -(gameObject.transform.localScale.z / 2f) + Bevel);
+                RoundCornerC.transform.localScale = new Vector3(Bevel * 2.55f, gameObject.transform.localScale.x / 2f, Bevel * 2f);
+
+                RoundCornerD.GetComponent<Renderer>().enabled = true;
+                UnityEngine.Object.Destroy(RoundCornerD.GetComponent<Collider>());
+                RoundCornerD.transform.parent = menu.transform;
+                RoundCornerD.transform.rotation = Quaternion.identity * Quaternion.Euler(0f, 0f, 90f);
+                RoundCornerD.transform.localPosition = gameObject.transform.localPosition + new Vector3(0f, -(gameObject.transform.localScale.y / 2f) + (Bevel * 1.275f), -(gameObject.transform.localScale.z / 2f) + Bevel);
+                RoundCornerD.transform.localScale = new Vector3(Bevel * 2.55f, gameObject.transform.localScale.x / 2f, Bevel * 2f);
+
+                gameObject.AddComponent<Classes.Button>().relatedText = "NextPage";
+
+                gameObject.GetComponent<Renderer>().material.color = btnColor2;
+
+                GameObject[] ToChange = new GameObject[]
+                {
+                    BaseA,
+                    BaseB,
+                    RoundCornerA,
+                    RoundCornerB,
+                    RoundCornerC,
+                    RoundCornerD
+                };
+
+                foreach (GameObject obj in ToChange)
+                {
+                    obj.GetComponent<Renderer>().material.color = btnColor2;
+                }
+
+
+                TextMeshPro text = new GameObject
+                {
+                    transform =
+                {
+                    parent = canvasObject.transform
+                }
+                }.AddComponent<TextMeshPro>();
+                text.font = GameObject.Find("motdBodyText").GetComponent<TextMeshPro>().font;
+                text.text = ">>";
+                text.fontSize = 0.1f;
+                text.color = textColors[0];
+                text.alignment = TextAlignmentOptions.Center;
+                Outline outline = text.gameObject.AddComponent<Outline>();
+                outline.effectColor = new Color32(0, 0, 0, 200);
+                outline.effectDistance = new Vector2(1.5f, -1.5f);
+                RectTransform component = text.GetComponent<RectTransform>();
+                component.localPosition = Vector3.zero;
+                component.sizeDelta = new Vector2(.05f, .02f);
+                component.localPosition = new Vector3(0.0523f, gameObject.transform.position.y, gameObject.transform.position.z);
+                component.rotation = Quaternion.Euler(new Vector3(180f, 90f, 90f));
+
+                // Previous Page
+                if (!UnityInput.Current.GetKey(KeyCode.Q))
+                {
+                    gameObject2.layer = 2;
+                }
+                UnityEngine.Object.Destroy(gameObject2.GetComponent<Rigidbody>());
+                gameObject2.GetComponent<BoxCollider>().isTrigger = true;
+                gameObject2.transform.parent = menu.transform;
+                gameObject2.transform.rotation = Quaternion.identity;
+
+                gameObject2.transform.localScale = new Vector3(0.01f, 0.2f, 0.071f);
+                gameObject2.transform.localPosition = new Vector3(0.514f, 0.12f, -0.29f);
+
+                gameObject2.GetComponent<Renderer>().enabled = false;
+                
+                BaseAA.GetComponent<Renderer>().enabled = true;
+                UnityEngine.Object.Destroy(BaseAA.GetComponent<Collider>());
+                BaseAA.transform.parent = menu.transform;
+                BaseAA.transform.rotation = Quaternion.identity;
+                BaseAA.transform.localPosition = gameObject2.transform.localPosition;
+                BaseAA.transform.localScale = gameObject2.transform.localScale + new Vector3(0f, Bevel * -2.55f, 0f);
+
+                BaseBB.GetComponent<Renderer>().enabled = true;
+                UnityEngine.Object.Destroy(BaseBB.GetComponent<Collider>());
+                BaseBB.transform.parent = menu.transform;
+                BaseBB.transform.rotation = Quaternion.identity;
+                BaseBB.transform.localPosition = gameObject2.transform.localPosition;
+                BaseBB.transform.localScale = gameObject2.transform.localScale + new Vector3(0f, 0f, -Bevel * 2f);
+
+                RoundCornerAA.GetComponent<Renderer>().enabled = true;
+                UnityEngine.Object.Destroy(RoundCornerAA.GetComponent<Collider>());
+                RoundCornerAA.transform.parent = menu.transform;
+                RoundCornerAA.transform.rotation = Quaternion.identity * Quaternion.Euler(0f, 0f, 90f);
+                RoundCornerAA.transform.localPosition = gameObject2.transform.localPosition + new Vector3(0f, (gameObject2.transform.localScale.y / 2f) - (Bevel * 1.275f), (gameObject2.transform.localScale.z / 2f) - Bevel);
+                RoundCornerAA.transform.localScale = new Vector3(Bevel * 2.55f, gameObject2.transform.localScale.x / 2f, Bevel * 2f);
+
+                RoundCornerBB.GetComponent<Renderer>().enabled = true;
+                UnityEngine.Object.Destroy(RoundCornerBB.GetComponent<Collider>());
+                RoundCornerBB.transform.parent = menu.transform;
+                RoundCornerBB.transform.rotation = Quaternion.identity * Quaternion.Euler(0f, 0f, 90f);
+                RoundCornerBB.transform.localPosition = gameObject2.transform.localPosition + new Vector3(0f, -(gameObject2.transform.localScale.y / 2f) + (Bevel * 1.275f), (gameObject2.transform.localScale.z / 2f) - Bevel);
+                RoundCornerBB.transform.localScale = new Vector3(Bevel * 2.55f, gameObject2.transform.localScale.x / 2f, Bevel * 2f);
+
+                RoundCornerCC.GetComponent<Renderer>().enabled = true;
+                UnityEngine.Object.Destroy(RoundCornerCC.GetComponent<Collider>());
+                RoundCornerCC.transform.parent = menu.transform;
+                RoundCornerCC.transform.rotation = Quaternion.identity * Quaternion.Euler(0f, 0f, 90f);
+                RoundCornerCC.transform.localPosition = gameObject2.transform.localPosition + new Vector3(0f, (gameObject2.transform.localScale.y / 2f) - (Bevel * 1.275f), -(gameObject2.transform.localScale.z / 2f) + Bevel);
+                RoundCornerCC.transform.localScale = new Vector3(Bevel * 2.55f, gameObject2.transform.localScale.x / 2f, Bevel * 2f);
+
+                RoundCornerDD.GetComponent<Renderer>().enabled = true;
+                UnityEngine.Object.Destroy(RoundCornerDD.GetComponent<Collider>());
+                RoundCornerDD.transform.parent = menu.transform;
+                RoundCornerDD.transform.rotation = Quaternion.identity * Quaternion.Euler(0f, 0f, 90f);
+                RoundCornerDD.transform.localPosition = gameObject2.transform.localPosition + new Vector3(0f, -(gameObject2.transform.localScale.y / 2f) + (Bevel * 1.275f), -(gameObject2.transform.localScale.z / 2f) + Bevel);
+                RoundCornerDD.transform.localScale = new Vector3(Bevel * 2.55f, gameObject2.transform.localScale.x / 2f, Bevel * 2f);
+
+                gameObject2.AddComponent<Classes.Button>().relatedText = "PreviousPage";
+
+                gameObject2.GetComponent<Renderer>().material.color = btnColor2;
+
+                GameObject[] ToChange23 = new GameObject[]
+                {
+                    BaseAA,
+                    BaseBB,
+                    RoundCornerAA,
+                    RoundCornerBB,
+                    RoundCornerCC,
+                    RoundCornerDD
+                };
+
+                foreach (GameObject obj in ToChange23)
+                {
+                    obj.GetComponent<Renderer>().material.color = btnColor2;
+                }
+
+
+                TextMeshPro text23 = new GameObject
+                {
+                    transform =
+                {
+                    parent = canvasObject.transform
+                }
+                }.AddComponent<TextMeshPro>();
+                text23.font = GameObject.Find("motdBodyText").GetComponent<TextMeshPro>().font;
+                text23.text = "<<";
+                text23.fontSize = 0.1f;
+                text23.color = textColors[0];
+                text23.alignment = TextAlignmentOptions.Center;
+                Outline outline23 = text23.gameObject.AddComponent<Outline>();
+                outline23.effectColor = new Color32(0, 0, 0, 200);
+                outline23.effectDistance = new Vector2(1.5f, -1.5f);
+                RectTransform component23 = text23.GetComponent<RectTransform>();
+                component23.localPosition = Vector3.zero;
+                component23.sizeDelta = new Vector2(.05f, .02f);
+                component23.localPosition = new Vector3(0.0523f, gameObject2.transform.position.y, gameObject2.transform.position.z);
+                component23.rotation = Quaternion.Euler(new Vector3(180f, 90f, 90f));
+            }   
+            else
+            {
+                GameObject[] ToChange = new GameObject[]
+                {
+                    BaseA,
+                    BaseB,
+                    RoundCornerA,
+                    RoundCornerB,
+                    RoundCornerC,
+                    RoundCornerD
+                };
+                GameObject[] ToChange2 = new GameObject[]
+                {
+                    BaseAA,
+                    BaseBB,
+                    RoundCornerAA,
+                    RoundCornerBB,
+                    RoundCornerCC,
+                    RoundCornerDD
+                };
+                foreach (GameObject obj in ToChange)
+                {
+                    GameObject.Destroy(obj.GetComponent<Renderer>());
+                }
+                foreach (GameObject obj in ToChange2)
+                {
+                    GameObject.Destroy(obj.GetComponent<Renderer>());
+                }
+            }
         }
 
 
@@ -1107,6 +1455,7 @@ namespace StupidTemplate.Menu
 
         public static void CreateModuleButton(float offset, ButtonInfo method, int buttonIndex)
         {
+            isInCat = true;
             int row = buttonIndex / 4;
             float zOffset = -0.09f * row;
             Vector3 basePos = new Vector3(0.514f, 0.113f - offset, 0.19f + zOffset);
@@ -1251,6 +1600,7 @@ namespace StupidTemplate.Menu
             component.rotation = Quaternion.Euler(new Vector3(180f, 90f, 90f));
         }
 
+        public static bool uimenu = false;
 
 
         public static void RecreateMenu()
@@ -1268,7 +1618,7 @@ namespace StupidTemplate.Menu
         public static void RecenterMenu(bool isRightHanded, bool isKeyboardCondition)
         {
             if (!isKeyboardCondition)
-            {
+            { 
                 if (!isRightHanded)
                 {
                     menu.transform.position = GorillaTagger.Instance.leftHandTransform.position;
@@ -1294,17 +1644,12 @@ namespace StupidTemplate.Menu
 
                 if (TPC != null)
                 {
-                    TPC.transform.position = new Vector3(-999f, -999f, -999f);
+                    TPC.transform.position = new Vector3(-64f, 3.4f, -65f);
                     TPC.transform.rotation = Quaternion.identity;
-                    GameObject bg = GameObject.CreatePrimitive(PrimitiveType.Cube);
-                    bg.transform.localScale = new Vector3(10f, 10f, 0.01f);
-                    bg.transform.transform.position = TPC.transform.position + TPC.transform.forward;
-                    bg.GetComponent<Renderer>().material.color = new Color32((byte)(backgroundColor.colors[0].color.r * 50), (byte)(backgroundColor.colors[0].color.g * 50), (byte)(backgroundColor.colors[0].color.b * 50), 255);
-                    GameObject.Destroy(bg, Time.deltaTime);
                     menu.transform.parent = TPC.transform;
-                    menu.transform.position = (TPC.transform.position + (Vector3.Scale(TPC.transform.forward, new Vector3(0.5f, 0.5f, 0.5f)))) + (Vector3.Scale(TPC.transform.up, new Vector3(-0.02f, -0.02f, -0.02f)));
+                    menu.transform.position = TPC.transform.position + (TPC.transform.forward * 0.5f) + (TPC.transform.up * 0f);
                     Vector3 rot = TPC.transform.rotation.eulerAngles;
-                    rot = new Vector3(rot.x - 90, rot.y + 90, rot.z);
+                    rot += new Vector3(-90f, 90f, 0f);
                     menu.transform.rotation = Quaternion.Euler(rot);
 
                     if (reference != null)
@@ -1356,38 +1701,6 @@ namespace StupidTemplate.Menu
         private static bool rightTriggerPressed = false;
         private static bool leftTriggerPressed = false;
 
-        public static void NextPage()
-        {
-            if (menu != null)
-            {
-                if (ControllerInputPoller.instance.rightControllerIndexFloat > 0.1f && !rightTriggerPressed)
-                {
-                    Toggle("NextPage");
-                    rightTriggerPressed = true;
-                }
-                else if (ControllerInputPoller.instance.rightControllerIndexFloat <= 0.1f)
-                {
-                    rightTriggerPressed = false;
-                }
-            }           
-        }
-
-        public static void PreviousPage()
-        {
-            if (menu != null)
-            {
-                if (ControllerInputPoller.instance.leftControllerIndexFloat > 0.1f && !leftTriggerPressed)
-                {
-                    Toggle("PreviousPage");
-                    leftTriggerPressed = true;
-                }
-                else if (ControllerInputPoller.instance.leftControllerIndexFloat <= 0.1f)
-                {
-                    leftTriggerPressed = false;
-                }
-            }           
-        }
-
         public static void Toggle(string buttonText)
         {
             int lastPage = ((buttons[buttonsType].Length + buttonsPerPage - 1) / buttonsPerPage) - 1;
@@ -1410,7 +1723,7 @@ namespace StupidTemplate.Menu
                 } else
                 if (buttonText == "leave")
                 {
-                    PhotonNetwork.Disconnect();
+                    NetworkSystem.Instance.ReturnToSinglePlayer();
                 } else
                 if (buttonText == "home")
                 {
@@ -1426,6 +1739,7 @@ namespace StupidTemplate.Menu
                             if (target.enabled)
                             {
                                 NotifiLib.SendNotification("<color=grey>[</color><color=green>ENABLE</color><color=grey>]</color> " + target.toolTip);
+                                GUINotifs.SendNotification("ToolTip","<color=grey>[</color><color=green>ENABLE</color><color=grey>]</color> " + target.toolTip);
                                 if (target.enableMethod != null)
                                 {
                                     try { target.enableMethod.Invoke(); } catch { }
@@ -1434,6 +1748,7 @@ namespace StupidTemplate.Menu
                             else
                             {
                                 NotifiLib.SendNotification("<color=grey>[</color><color=red>DISABLE</color><color=grey>]</color> " + target.toolTip);
+                                GUINotifs.SendNotification("ToolTip", "<color=grey>[</color><color=red>DISABLE</color><color=grey>]</color> " + target.toolTip);
                                 if (target.disableMethod != null)
                                 {
                                     try { target.disableMethod.Invoke(); } catch { }
@@ -1443,6 +1758,7 @@ namespace StupidTemplate.Menu
                         else
                         {
                             NotifiLib.SendNotification("<color=grey>[</color><color=green>ENABLE</color><color=grey>]</color> " + target.toolTip);
+                            GUINotifs.SendNotification("ToolTip", "<color=grey>[</color><color=green>ENABLE</color><color=grey>]</color> " + target.toolTip);
                             if (target.method != null)
                             {
                                 try { target.method.Invoke(); } catch { }
