@@ -180,9 +180,10 @@ namespace AetherTemp.Menu
                 Player.Instance.GetComponent<Rigidbody>().velocity = Player.Instance.headCollider.transform.forward * 9f;
             }
 
-            if (rp && Time.time > delay + 1.3f)
+            if (rp && Time.time > delay)
             {
-                delay = Time.time;
+                delay = Time.time + 1.5f;
+                Player.Instance.GetComponent<Rigidbody>().velocity = Player.Instance.headCollider.transform.forward * 9f;
             }
         }
         public static void Speed()
@@ -333,8 +334,12 @@ namespace AetherTemp.Menu
         {
             mods.GunTemplate(delegate
             {
-                GTPlayer.Instance.transform.position = mods.GunSphere.transform.position;
-            }, null, false);
+                if (Mouse.current.leftButton.isPressed && Time.time > delay || ControllerInputPoller.instance.rightControllerIndexFloat > 0.1f && Time.time > delay)
+                {
+                    delay = Time.time + 1f;
+                    GTPlayer.Instance.transform.position = mods.GunSphere.transform.position;
+                }              
+            }, null, true);
         }
 
 
@@ -395,7 +400,7 @@ namespace AetherTemp.Menu
             }
         }
 
-        static GameObject platL, platR, platL2, platL3, platL4, platR2, platR3, platR4;
+        static GameObject platL, platR, platL2, platL3, platL4, platR2;
         public static void Invizplatforms()
         {
             if (ControllerInputPoller.instance.leftGrab)
@@ -843,12 +848,5 @@ namespace AetherTemp.Menu
         }
 
         public static float JukeTime = 0f;
-
-
-
-
-
-
-
     }
 }
